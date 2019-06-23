@@ -17,11 +17,11 @@ function getCat(){
  * @par item id
  * @return items
  */
-function getItem($pageId){
+function getItem($where, $value){
     global $con;
-    $q = "SELECT * FROM items INNER JOIN users on users.userId = items.user_id WHERE items.cat_id=:id";
+    $q = "SELECT * FROM items  WHERE $where =:id";
     $query = $con->prepare($q);
-    $query->bindParam(':id',$pageId,PDO::PARAM_INT);
+    $query->bindParam(':id', $value,PDO::PARAM_INT);
     $query->execute();
     $items = $query->fetchAll();
     

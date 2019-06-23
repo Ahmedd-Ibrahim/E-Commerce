@@ -5,7 +5,7 @@ $page_title = 'index';
 
 include 'ini.php';
 
-echo getStatus($_SESSION['user']);
+
 
 
 include $temp . 'footer.php';

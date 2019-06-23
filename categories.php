@@ -1,9 +1,12 @@
 <?php
-
+session_start();
 
 $page_title = str_replace('-', ' ', $_GET['pagename']);
 
 include 'ini.php';
+if(isset($_SESSION['user'])){
+
+
 ?>
 <div class="container categories">
     <h1 class="text-center">
@@ -12,7 +15,7 @@ include 'ini.php';
     <div class="row">
         <?php
 
-        foreach (getItem($_GET['pageid']) as $item) { ?>
+        foreach (getItem('cat_id', $_GET['pageid']) as $item) { ?>
             <div class="col-sm-6 col-md-3">
                 <div class="thumbnail item-box">
                     <span class="price"> <?php echo $item['price'] ?></span>
@@ -25,11 +28,14 @@ include 'ini.php';
                 </div>
             </div>
             <?php
-           
         }
         ?>
     </div>
 </div>
 <?php
+} else{
+    header('location: login.php');
+    exit();
+}
 include $temp . 'footer.php';
 ?>
