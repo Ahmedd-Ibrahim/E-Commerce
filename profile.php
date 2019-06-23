@@ -18,12 +18,26 @@ if(isset($_SESSION['user'])){
         <h1 class="text-center">My profile</h1>
         <!-- iformation block -->
         <div class="panel panel-primary">
-            <div class="panel-heading">My Information</div>
+            <div class="panel-heading text-center"> 
+            <i class="fas fa-address-card fa-2x"></i>
+          <span class="info-head">  My Information</span>
+        </div>
             <div class="panel-body">
-                name: <?php echo $get['username']; ?> <br>
-                faull name: <?php echo $get['fullName']; ?> <br>
-                Email: <?php echo $get['email']; ?> <br>
-                regest date: <?php echo $get['date']; ?> 
+                <ul class="list-unstyled">
+                    <li>
+                    <i class="fa fa-address-book"></i>
+                        <span>name: </span><?php echo $get['username']; ?> </li>
+
+                    <li>
+                    <i class="fab fa-app-store"></i>    
+                    <span>faull name:</span><?php echo $get['fullName']; ?></li>
+                    <li>
+                    <i class="far fa-envelope"></i>    
+                    <span> Email:</span><?php echo $get['email']; ?></li>
+                    <li>
+                    <i class="far fa-clock"></i>    
+                    <span>regest date:</span> <?php echo $get['date']; ?> </li>
+                </ul>
             </div>
         </div>
         <!-- End information block -->

@@ -63,4 +63,18 @@ body{
     display: block;
     text-align: right
 }
-/* start index */
+/* End index */
+
+/* start profile */
+.information ul.list-unstyled li{
+    padding: 10px;
+}
+.information ul.list-unstyled li:nth-child(odd) {
+    
+    background-color: #EEE
+}
+.information .info-head{
+    position: relative;
+    top: -5px;
+}
+/* End profile */
