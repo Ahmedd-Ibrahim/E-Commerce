@@ -1,0 +1,66 @@
+/* main role  */
+body{
+    background-color: #f4f4f4;
+}
+
+/* bootstarp edit */
+.upper-nav .login{
+    margin: 5px 10px;
+}
+.navbar-nav .dropdown-menu{
+    margin-top: 7px;
+    background-color: #343a40;
+    font-size: 15px;
+}
+.dropdown-item{
+    color: #d8dde1
+}
+
+/* form Edit members */
+/* start categories page */
+.categories .price{
+    padding: 0px 16px;
+    top: 8px;
+    background: #b9b1b1;
+    position: absolute;
+    color: #fbf8f8;
+}
+.categories .name{
+    color: #949494;
+    font-weight: bold;
+}
+.categories .description{
+    color: #949494;
+    
+}
+/* End categories page */
+
+/* login page */
+.login-page input{
+    margin: 10px auto;
+    max-width: 400px;
+}
+.login-page .signup{
+    display: none
+}
+/* .login-page .active{
+    color: #f36868;
+} */
+.login-page span{
+    cursor: pointer;
+    color: #9da5ad
+}
+.login-page [data-class="signup"].active{
+    color:#28a745;
+}
+.login-page [data-class="login"].active{
+    color:#007bff;
+}
+
+/* End login page */
+/* start index */
+.pull-right{
+    display: block;
+    text-align: right
+}
+/* start index */

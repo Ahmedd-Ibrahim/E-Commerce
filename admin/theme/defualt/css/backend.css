@@ -1,0 +1,238 @@
+/* main role  */
+body{
+    background-color: #f4f4f4;
+}
+.login{
+    width: 300px;
+    margin: 100px auto;
+}
+.login h4{
+    color:#888
+}
+.form-control{
+    margin-bottom: 10px;
+    background-color: #e4e4e4;
+}
+.login .btn{
+    color: #f0eaea
+}
+
+/* bootstarp edit */
+.navbar-nav .dropdown-menu{
+    margin-top: 7px;
+    background-color: #343a40;
+    font-size: 15px;
+}
+.dropdown-item{
+    color: #d8dde1
+}
+
+/* form Edit members */
+.table-responsive tbody:nth-child(even){
+    background-color: #767676;
+}
+.edit-form{
+    width: 80%;
+    margin: 20px auto;
+  
+}
+.edit-form h1{
+    margin-left: 100px;
+}
+.form-group{
+    margin-right: 0;
+}
+/* End  form Edit members */
+
+/* start dashboard page */
+.dashboard .box{
+    font-size: 20px;
+    font-family: cursive;
+    font-weight: bold;
+    background: #DDD;
+    border: 1px solid #CCC;
+    color: cadetblue;
+    margin-bottom: 3px;
+
+}
+.dashboard span{
+    display: block;
+    font-size: xx-large;
+    padding: 20px;
+    color: #6a6565;
+    
+}
+/* End dashboard page */
+/* start feature */
+.feature h4{
+background: #f0f0f0;
+margin-top: 15px;
+border: 1px solid #CCC;
+color: #434343;
+margin-bottom: 0;
+
+}
+.feature p{
+    padding: 15px;
+}
+.feature .box .users .user{
+    margin-bottom: 15px;
+}
+.feature .box {
+    border: 1px solid #CCC;
+    margin-bottom: 5px;
+}
+.feature .box .user:nth-child(even) {
+    background: #fff
+}
+
+.feature .box .users .user .latest-span{
+    display: inline-block;
+    float: right;
+ 
+}
+
+.feature .box .users .user {
+    margin: 10px auto;
+    overflow: hidden;
+}
+.feature .box .users .user .btn{
+    padding: 0 8px;
+}
+
+/* End feature */
+/* start categories page */
+
+.categories .box{
+    
+    overflow: hidden;
+    transition: all 1s;
+    height: 0px;
+}
+.categories h4 {
+    display: inline-block
+}
+
+
+
+
+.categories .collection {
+    float:right;
+    font-size: 15px;
+
+}
+
+.categories .collection a{
+    text-decoration: none;
+    color: #747474;
+    font-weight: bold;
+}
+.categories .collection a:nth-child(odd){
+    color: red;
+}
+.categories .panel {
+    border: 1px solid #ccc ;
+}
+.categories .cat {
+    overflow: hidden;
+}
+.categories .cat p{
+    margin-bottom: 0;
+}
+.categories .cat hr {
+    margin: 3px
+}
+.categories .cat:nth-child(odd){
+    background-color: #e6e6e6
+}
+.categories .cat .btn{
+    margin-right: 1px;
+    padding: 3px 15px;
+    font-size: small;
+}
+.categories .cat .edit{
+    float: right;
+    position: relative;
+    margin-right: -70px;
+    transition: .25s;
+}
+.categories .cat:hover .edit {
+    float: right;
+    position: relative;
+    margin-right: 3px;
+}
+
+/* End categories page */
+
+/* start items page */
+/* start add item page */
+.add-form{
+    width: 80%;
+    margin: 20px auto;
+    margin-right: 0;
+  
+}
+.add-form h1{
+    margin-bottom: 25px;
+}
+
+
+/* End add item page */
+/*Start manage Item*/
+
+.items .item {
+    overflow: hidden;
+}
+.items  p{
+    margin-bottom: 0;
+}
+.items  hr {
+    margin: 3px
+}
+.items .item:nth-child(odd){
+    background-color: #e6e6e6
+}
+.items .item .btn{
+    margin-right: 1px;
+    padding: 3px 15px;
+    font-size: small;
+}
+.items .item .edit{
+    float: right;
+    position: relative;
+    margin-right: -70px;
+    transition: .25s;
+}
+.items .item:hover .edit {
+    float: right;
+    position: relative;
+    margin-right: 3px;
+}
+
+/*End manage Item*/
+/* End items page */
+/* comment */
+.comment .comment-text{
+    max-width: 200px;
+}
+.last-comment{
+    background-color: #dee2e6 ;
+    padding: 15px;
+    margin: 5px 10px;
+}
+.comment-user{
+    color: brown;
+}
+
+.comment-date{
+    font-size: small;
+    color: #007bff;
+}
+.comment-item-name{
+    color: #007bff;
+}
+.box-comment .btn{
+    margin: 0px;
+    padding: 0px 10px;
+}
+/*End  comment */
