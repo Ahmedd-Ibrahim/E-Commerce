@@ -180,7 +180,6 @@ if (isset($_SESSION['username'])) {
 
 } elseif ($do == 'insert') {
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     $name = $_POST['name'];
     $status = $_POST['status'];
     $desc = $_POST['description'];

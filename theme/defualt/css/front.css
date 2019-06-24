@@ -78,3 +78,12 @@ body{
     top: -5px;
 }
 /* End profile */
+/* ads */
+ .price{
+    padding: 0px 16px;
+    top: 8px;
+    background: #b9b1b1;
+    position: absolute;
+    color: #fbf8f8;
+}
+/* End ads */

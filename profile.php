@@ -45,7 +45,7 @@ if(isset($_SESSION['user'])){
         <div class="panel panel-primary">
             <div class="panel-heading">My ADs</div>
             <div class="panel-body">
-                ads
+                
                 <?php if(! empty(getItem('user_id', $get['userId']))){
                 foreach(getItem('user_id', $get['userId']) as $userAds){?>
                      <div class="col-sm-6 col-md-3">

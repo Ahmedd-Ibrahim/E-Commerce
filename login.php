@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
   $user = $_POST['user'];
   $pass = $_POST['pass'];
-
   $hash = sha1($pass);
   $stmt  = "SELECT * FROM users WHERE  password=:password AND username =:username ";
   $query = $con->prepare($stmt);
@@ -26,11 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
   $insert = $query->execute();
   $count = $query->rowCount();
   $fetch = $query->fetch();
-
+  echo $fetch['userId'];
   if ($count == true) {
     echo 'checked and it\'s true';
     $_SESSION['user'] = $user;
-
+    $_SESSION['user-id'] =  $fetch['userId'] ;
     header('location: index.php');
     exit();
   }

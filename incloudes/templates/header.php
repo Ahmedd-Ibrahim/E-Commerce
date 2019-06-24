@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="theme/defualt/css/front.css">
     <title><?php getTitle(); ?></title>
 </head>
-
 <body>
     <div class="upper-nav">
         <div class="container">
@@ -19,7 +18,7 @@
                     <?php
                     if (isset($_SESSION['user'])) {
 
-                        echo 'Welcome ' . $_SESSION['user'] . " <a href='profile.php'>Your profile</a> - <a href='logout.php'>logout</a>";
+                        echo 'Welcome ' . $_SESSION['user'] . " <a href='profile.php'>Your profile</a> - <a href='logout.php'>logout </a><a href='ads.php'>new Ads</a>";
                     } else {
                         echo '<a href="login.php" class="log "><span class="pull-right">Login | singUp</span></a>';
                     }
