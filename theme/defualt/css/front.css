@@ -86,4 +86,34 @@ body{
     position: absolute;
     color: #fbf8f8;
 }
+
 /* End ads */
+/* item page */
+.item  .thumbnail{
+    border: none
+}
+.item .item-ul li{
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.item .item-ul li:nth-child(odd){
+background-color: #EEE
+}
+
+.item .item-ul li span{
+    margin-right: 22px;
+    display: inline-block;
+    width: 60px;
+}
+
+.comment  textarea{
+    display: block;
+    width: 430px;
+    height: 70px;
+}
+
+.comment form  .btn{
+ margin: 10px 0;
+}
+/* End item page */

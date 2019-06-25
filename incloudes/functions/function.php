@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * function to get any one data from any database by [id]
+ * @par your selector in any table
+ * @par any table from database
+ * @par your Where selector
+ * @par your value assign to where selector
+ */
+function getDataById($selector, $table, $where, $value){
+    global $con;
+    $q = "SELECT $selector FROM $table WHERE $where=:id";
+    $query = $con->prepare($q);
+    $query->bindParam(':id', $value, PDO::PARAM_INT);
+    $query->execute();
+    $data = $query->fetch();
+    return $data[$selector];
+}
+
 // function to get only catogeries
 
 function getCat(){
@@ -8,7 +25,6 @@ function getCat(){
     $query = $con->prepare($q);
     $query->execute();
     $categories = $query->fetchAll();
-    
     return $categories;
 }
 
