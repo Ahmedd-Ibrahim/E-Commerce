@@ -44,6 +44,9 @@
 
                 <div class="collapse navbar-collapse " id="app-nav">
                     <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item ">
+                                <a class="nav-link" href="item.php">All Items</a>
+                            </li>
                         <?php
                         $getCats = getCat();
                         foreach ($getCats as $cat) { ?>

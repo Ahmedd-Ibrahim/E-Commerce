@@ -53,7 +53,7 @@ if(isset($_SESSION['user'])){
                     <span class="price"> <?php echo $userAds['price'] ?></span>
                     <img src="computer.png" class="img-fluid img-thumbnail" alt="Responsive image">
                     <div class="caption">
-                        <h3 class="name text-center">  <?php echo $userAds['name'] ?></h3>
+                        <h3 class="name text-center"> <a href="item.php?do=item&id=<?php echo $userAds['item_id']; ?>" class="title"> <?php echo $userAds['name'] ?></a></h3>
                         <p class="description text-center"><?php echo $userAds['description'] ?></p>
                     </div>
 
