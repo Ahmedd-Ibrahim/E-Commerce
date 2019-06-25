@@ -95,8 +95,6 @@ elseif ($do == 'edit') {
                     <label for="username" class="col-sm-1 col-label">user: </label>
                     <div class="col-sm-4  ">
                         <?php echo $fetch['fullName']; ?>
-                        
-                        
                     </div>
                 </div>
                 <input type="hidden" name='userId' value="<?php echo $id ?>">

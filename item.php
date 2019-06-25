@@ -15,12 +15,26 @@ if(isset($_SESSION['user'])){
 ?> 
 <div class="container">
 <?php 
+// if target any item
     if( isset($_GET['do']) && $_GET['do'] == 'item'){
+        // comments
+        $queu = '';
+        if (isset($_GET['page']) && $_GET['page'] == 'pending') {  // check if will display only activate comments
+            $queu = ' WHERE comments.status = 0';
+        }
+        // $q = "SELECT * FROM `comments`  $queu";
+        $sql = "SELECT comments.*,users.username, items.name FROM comments  INNER JOIN users ON users.userId = comments.user_id
+        INNER JOIN items ON items.item_id = comments.id_item  $queu";
+        $query = $con->prepare($sql);
+        $update = $query->execute();
+        $fetchComments = $query->fetchAll();
+        $totalCount = $query->rowCount();
+        // End comments
+
         if(! empty(getItem('item_id', $_GET['id']))){
             foreach(getItem('item_id', $_GET['id']) as $userAds){
     ?>
 <div class="panel panel-primary">
-  
             <div class="panel-heading text-center"><?php echo $userAds['name'] ?></div>
             <div class="panel-body">
                 
@@ -34,13 +48,54 @@ if(isset($_SESSION['user'])){
                     </div>
                 </div>
             </div>
+            </div>
+            </div>
+            <div class="container comment">
+            
+            <div class="table-responsive">
+                <table class="table table-striped table-dark table-bordered ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">comment</th>
+                            <th scope="col">username</th>
+                            <th scope="col">items</th>
+                            <th scope="col">comment Date</th>
+                            <th scope="col">Control</th>
+                        </tr>
+                    </thead>
+
+                    <?php if (isset($fetchComments)) {  // loop to catch all users information
+                        foreach ($fetchComments as $comment) {
+                            ?>
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><?php echo $comment['comment_id']; ?></th>
+                                    <td class="comment-text"><?php echo $comment['comment']; ?></td>
+                                    <td><?php echo $comment['username'] ?></td>
+                                    <td><?php echo $comment['name'] ?></td>
+                                    <td><?php echo
+                                            $comment['date'] ?></td>
+                                    <td>
+                                        
+                                        <a href="comments.php?do=edit&id=<?php echo $comment['comment_id']; ?>" class="btn btn-success">Edit </a>
+                                      
+                                    </td>
+                                </tr>
+                            </tbody>
+                        <?php }
+                } ?>
+                </table>
+            </div>
+        </div>
 <?php                }
                 } else{
                     echo 'there are no ads to show';
                 } 
-            } else{ ?>
+            } else{ // all items
+                 ?>
 <div class="panel panel-primary">
-  
+
   <div class="panel-heading text-center">ALL Items</div>
   <div class="panel-body">
       
@@ -57,12 +112,10 @@ if(isset($_SESSION['user'])){
       </div>
   </div>
 <?php                }
-      } else{
+      } else {
           echo 'there are no ads to show';
       } 
-                
             }
-               
                 ?>
             </div>
         </div>
