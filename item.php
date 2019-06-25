@@ -83,13 +83,42 @@ if(isset($_SESSION['user'])){
             
             <div class="container comment">
                 <!-- Start Add comment -->
+                <?php 
+                if(isset($_SESSION['user'])){
+                ?>
                 <h3 class="text-center">Add Your comment </h3>
                <div class="col-md-offset-4">
-               <form action="">
-               <textarea ></textarea>
+               <form method="POST"action="<?php echo $_SERVER['PHP_SELF'] . '?do=item&id='.  getDataById('item_id', 'items', 'item_id', $userAds['item_id'])  ?>">
+               <textarea name="textarea"></textarea>
                <input type="submit" value="Add comment" name="add-comment" class="btn btn-primary">
                </form>
                </div>
+               <?php 
+
+               if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add-comment'])){
+                   $ucomment = $_POST['textarea'];
+                   $username = $_SESSION['user'];
+                   $userid = $_SESSION['user-id'] ;
+
+                   $itemid =  getDataById('item_id', 'items', 'item_id', $userAds['item_id']);
+
+                   echo $ucomment . ' '. $username . ' '. $userid . ' ' . $itemid;
+
+                //    if(!empty($ucomment) && isset($userid)){
+                //        $q = "INSERT INTO `comments` ( user_id, id_item , date,  comment) VALUES (':user_id', ':id_item', now(), ':comment')";
+                //        $insert = $con->prepare($q);
+                //        $insert->bindparam(':user_id', $userid, PDO::PARAM_INT);
+                //        $insert->bindparam(':id_item', $itemid, PDO::PARAM_INT);
+                //        $insert->bindparam(':comment', $ucomment, PDO::PARAM_STR);
+                //        $insert->execute();
+                //        if($insert == true){
+                //            echo 'it\'s done!';
+                //        }
+                //    }
+                   
+               }
+                }
+               ?>
                <!-- End add comment -->
             <hr class="custom-hr">
             <div class="table-responsive">
