@@ -1,4 +1,7 @@
 /* main role  */
+*{
+    overflow-x: hidden;
+}
 body{
     background-color: #f4f4f4;
 }
@@ -115,5 +118,42 @@ background-color: #EEE
 
 .comment form  .btn{
  margin: 10px 0;
+}
+.comment .center-block {
+    max-width: 100px;
+}
+.comment-row .comment-content .lead{
+    
+    position: relative;
+    padding: 10px;
+    margin: 27px 0px;
+    overflow-x: initial;
+    color: #888080;
+    background-color: #EEE
+}
+.comment-row .comment-content .lead:before{
+    content: "";
+    width: 0;
+    height: 0;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent #EEE transparent transparent;
+    position: absolute;
+    left: -29px;
+    top: 9px;
+}
+.comment-row .avater-info{
+    position: relative;
+    top: 0px;
+    left: 108px;
+
+}
+.comment-row .avater-info p:first-child{
+    color: #007bff;
+    font-size: 16px;
+}
+.comment-row .avater-info p:last-child{
+    color: #776e6e;
+    font-size: 12px;
 }
 /* End item page */
