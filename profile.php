@@ -72,7 +72,6 @@ if(isset($_SESSION['user'])){
         <div class="panel panel-primary">
             <div class="panel-heading">My latest Comments</div>
             <div class="panel-body">
-                
                 <?php 
                 $q = "SELECT * FROM comments WHERE user_id =:user_id";
                 $queri = $con->prepare($q);
@@ -81,7 +80,29 @@ if(isset($_SESSION['user'])){
                 $comments = $queri->fetchAll();
                 if(! empty($comments)){
                     foreach($comments as $comment){
-                        echo '<p>' . $comment['comment'] . '</p>';
+                        ?>
+<!-- show  last comments on profile -->
+<div class="row comment-row">
+                        <div class="col-md-3">
+                            <div class="avatar ">
+                                <img class="img-thumbnail img-circle img-responsive center-block" src="avatar.png" alt="avatar">
+                                <div class="avater-info">
+                                <p class="lead"><?php echo $_SESSION['user'] ?></p>
+                                <p class="date"><?php echo $comment['date'] ?></p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-9 comment-content">
+                            <p class="lead">
+                            <?php echo $comment['comment']; ?>
+                            </p>
+                        </div>
+                        
+                    </div>
+                    <hr class="custom-hr">
+
+<?php
                     }
                 } else{
                     echo 'ther\'e no comments to show' ;

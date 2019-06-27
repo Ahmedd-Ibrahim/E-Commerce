@@ -1,14 +1,23 @@
 /* main role  */
-*{
-    overflow-x: hidden;
-}
+
 body{
     background-color: #f4f4f4;
 }
 
 /* bootstarp edit */
+.upper-nav{
+    margin-bottom: 5px;
+}
 .upper-nav .login{
     margin: 5px 10px;
+}
+.upper-nav img.img-circle{
+    width: 30px;
+    padding: 0
+
+}
+.upper-nav .btn{
+    padding: 0;
 }
 .navbar-nav .dropdown-menu{
     margin-top: 7px;

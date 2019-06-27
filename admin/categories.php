@@ -43,7 +43,7 @@ if (isset($_SESSION['username'])) {
             <a href="?do=edit&id=<?php echo $cat['id']; ?>" class="btn btn-success edit">Edit </a>
             <?php
             echo "<div class='box'>";            echo "<p>" . ($cat['description'] == '' ? 'description is empty' : $cat['description']) . '</p>';
-            echo '<a href="?do=visibility&id=' . $cat['id'] . ' &vis=' . $cat['visibility'] . '" class="btn btn-info"> ' . ($cat['visibility'] == 0 ? 'hidden' : 'display') . ' </a>';
+            echo '<a href="?do=visibility&id=' . $cat['id'] . ' &vis=' . $cat['visibility'] . '" class="btn btn-info"> ' . ($cat['visibility'] == 0 ? 'display' : 'hidden') . ' </a>';
             echo '<span class="btn btn-danger">' . ($cat['allow_comment'] == 0 ? 'Disable comment' : 'Enable') . ' </span>';
             echo '<span class="btn btn-secondary">' . ($cat['allow_ads'] == 0 ? 'Remove Ads' : 'Add') . '</span>';
             //

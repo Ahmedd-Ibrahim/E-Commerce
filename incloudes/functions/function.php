@@ -1,27 +1,6 @@
 <?php
 
-/**
- * function to get comments by status
- * 
- */
-function CommentsByStatus($status, $id_item)
-{
-    // $set = '';
-    // if ($status == 'active') {
-    //     $set = 1;
-    // } else {
-    //     $set = 0;
-    // }
-    global $con;
-    $sql = "SELECT comments.*,users.username, items.name FROM comments  INNER JOIN users ON users.userId = comments.user_id
-        INNER JOIN items ON items.item_id = comments.id_item  WHERE comments.id_item =:id AND comments.status =:status";
-    $query = $con->prepare($sql);
-    $query->bindParam(':status', $status, PDO::PARAM_INT);
-    $query->bindParam(':id', $id_item, PDO::PARAM_INT);
-    $query->execute();
-    $fetchAll = $query->fetchAll();
-    return $fetchAll;
-}
+
 
 /**
  * function to get any one data from any database by [id]
@@ -40,11 +19,11 @@ function getDataById($selector, $table, $where, $value){
     return $data[$selector];
 }
 
-// function to get only catogeries
+// function to get  catogeries only activated
 
 function getCat(){
     global $con;
-    $q = "SELECT * FROM categories";
+    $q = "SELECT * FROM categories WHERE visibility = 1";
     $query = $con->prepare($q);
     $query->execute();
     $categories = $query->fetchAll();
@@ -58,7 +37,7 @@ function getCat(){
  */
 function getItem($where, $value){
     global $con;
-    $q = "SELECT * FROM items  WHERE $where =:id";
+    $q = "SELECT * FROM items  WHERE $where =:id AND status= 1";
     $query = $con->prepare($q);
     $query->bindParam(':id', $value,PDO::PARAM_INT);
     $query->execute();

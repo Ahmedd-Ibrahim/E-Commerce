@@ -1,10 +1,7 @@
 <?php
 ob_start();
 session_start();
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-
-$page_title = 'Item';
+$page_title = (isset($_GET['pagename']) ? str_replace('-', ' ', $_GET['pagename']) : 'All items');
 include 'ini.php';
 if (isset($_SESSION['user'])) {
     $stat = "SELECT * FROM `users` WHERE username=:username";
@@ -13,7 +10,9 @@ if (isset($_SESSION['user'])) {
     $query->execute();
     $get = $query->fetch();
 
-   
+} else{
+    header('location: login.php');
+    exit();
 }
 
 ?>
@@ -36,7 +35,7 @@ if (isset($_SESSION['user'])) {
         $totalCount = $query->rowCount();
         // End comments
 
-        if (!empty(getItem('item_id', $_GET['id']))) {
+        if (! empty(getItem('item_id', $_GET['id']))) {
             foreach (getItem('item_id', $_GET['id']) as $userAds) {
                 ?>
                 <div class="panel panel-primary">
@@ -80,9 +79,6 @@ if (isset($_SESSION['user'])) {
 
                                         </ul>
 
-
-
-
                                     </div>
 
                                 </div>
@@ -108,12 +104,8 @@ if (isset($_SESSION['user'])) {
                    
                     }
                     ?>
-                    <!-- End add comment -->
+                    <!-- End add comment -->          
                     
-                    
-                    <!-- show comments -->
-                    
-
                             <?php // add comment do database 
                                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add-comment'])) {
                                 $ucomment = $_POST['textarea'];
@@ -158,24 +150,43 @@ if (isset($_SESSION['user'])) {
                     <hr class="custom-hr">
                                 <?php }
                         } ?>
-                      
-                   
                     <!-- End show comments -->
                 </div>
-
             <?php 
-       
         }
     } else {
         echo 'there are no ads to show';
-    }
-} else { // all items
+    } // when select any categories
+} elseif (isset($_GET['pagename']) && isset($_GET['pageid'])){ ?>  
+    <div class="panel panel-primary">
+<div class="panel-heading text-center"><?php echo $page_title; ?></div>
+<div class="panel-body">
+<div class="row">
+        <?php
+        foreach (getItem('cat_id', $_GET['pageid']) as $item) { ?>
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail item-box">
+                    <span class="price"> <?php echo $item['price'] ?></span>
+                    <img src="computer.png" class="img-fluid img-thumbnail" alt="Responsive image">
+                    <div class="caption">
+                        <h3 class="name text-center"> <a href="item.php?do=item&id=<?php echo $item['item_id']; ?>"> <?php echo $item['name'] ?></a></h3>
+                        <p class="description text-center"><?php echo $item['description'] ?></p>
+                    </div>
+
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+    <?php
+}
+ else { // Show  all items
     ?>
         <div class="panel panel-primary">
-
             <div class="panel-heading text-center">ALL Items</div>
             <div class="panel-body">
-
                 <?php if (!empty(getItem('user_id', $get['userId']))) {
                     foreach (getItem('user_id', $get['userId']) as $userAds) { ?>
                         <div class="col-sm-6 col-md-3">
@@ -189,7 +200,6 @@ if (isset($_SESSION['user'])) {
                             </div>
                         </div>
                     <?php
-
                 }
             } else {
                 echo 'there are no ads to show';
@@ -200,5 +210,6 @@ if (isset($_SESSION['user'])) {
     </div>
 </div>
 <?php
+include $temp . 'footer.php';
 ob_end_flush();
 ?>
