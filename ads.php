@@ -5,9 +5,10 @@ $page_title = 'ADS';
 
 include 'ini.php';
 if (isset($_SESSION['user'])) {
+    // insert item
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert-item'])) {
         $name = $_POST['name'];
-        $status = $_POST['status'];
+        $used = $_POST['status'];
         $desc = $_POST['description'];
         $price = $_POST['price'];
         $made = $_POST['country'];
@@ -15,7 +16,7 @@ if (isset($_SESSION['user'])) {
         $cat_id = $_POST['cat'];
         $errors[] = '';
         (empty($name) ? $errors[] =   "<div class='alert alert-danger'> name  is empty! </div>" : null);
-        (empty($status) ? $errors[] =  "<div class='alert alert-danger'> status  is empty! </div>" : null);
+        (empty($used) ? $errors[] =  "<div class='alert alert-danger'> status  is empty! </div>" : null);
         (empty($desc) ? $errors[] =  "<div class='alert alert-danger'> description  is empty! </div>" : null);
         (empty($price) ? $errors[] =  "<div class='alert alert-danger'> price  is empty! </div>" : null);
         foreach ($errors as $error) {
@@ -26,15 +27,15 @@ if (isset($_SESSION['user'])) {
         }
         if (empty($error)) {
             // if no error access into database
-            $q = 'INSERT INTO `items` (name, price, add_date, country_made,status, description, user_id, cat_id)
+            $q = 'INSERT INTO `items` (name, price, add_date, country_made, used, description, user_id, cat_id)
       VALUES
-      (:name, :price, now(), :country_made,:status, :description, :user_id, :cat_id)
+      (:name, :price, now(), :country_made,:used, :description, :user_id, :cat_id)
       ';
             $query = $con->prepare($q);
             $query->bindparam(':name', $name, PDO::PARAM_STR);
             $query->bindparam(':price', $price, PDO::PARAM_STR);
             $query->bindparam(':country_made', $made, PDO::PARAM_STR);
-            $query->bindparam(':status', $status, PDO::PARAM_STR);
+            $query->bindparam(':used', $used, PDO::PARAM_STR);
             $query->bindparam(':description', $desc, PDO::PARAM_STR);
             $query->bindparam(':user_id', $member_id, PDO::PARAM_INT);
             $query->bindparam(':cat_id', $cat_id, PDO::PARAM_INT);
@@ -45,14 +46,12 @@ if (isset($_SESSION['user'])) {
             }
         }
     }
-
-
+    // End insert Item
     ?>
-
     <div class="ads">
         <div class="container">
             <h1 class="text-center">Add New Ads</h1>
-            <!-- iformation block -->
+            <!-- information block -->
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
                     <i class="fas fa-address-card fa-2x"></i>
@@ -62,7 +61,7 @@ if (isset($_SESSION['user'])) {
                     <div class="row">
                         <div class="col-md-6">
                             <div class="box">
-                                <!-- Start add script -->
+                                <!-- Start add New Item script -->
                                 <form class="form-group add-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
                                     <div class="container">
                                         <div class="form-group row ">
@@ -125,13 +124,12 @@ if (isset($_SESSION['user'])) {
                                         </div>
                                     </div>
                                 </form>
-                                <!-- End add script -->
+                                <!-- End add new item script -->
                             </div>
                         </div>
                         <!-- preview -->
                         <div class="col-md-6">
                             <div class="box">
-
                                 <div class="thumbnail item-box">
                                     <span class="price">$
                                         <span class="live-price">
@@ -153,12 +151,7 @@ if (isset($_SESSION['user'])) {
                 </div>
             </div>
             <!-- End Ads block -->
-
-
         </div>
-
-
-
     <?php
 } else {
     header('location: login.php');

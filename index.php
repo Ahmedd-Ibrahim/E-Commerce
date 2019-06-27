@@ -10,8 +10,5 @@ if(isset($_SESSION['user-id'])){
     echo 'not set';
 }
 
-
-
-
 include $temp . 'footer.php';
 ?>

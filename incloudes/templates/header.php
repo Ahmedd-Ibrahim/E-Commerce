@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <!-- uppear navbar -->
     <div class="upper-nav">
         <div class="container">
             <div class="upper-cat">
@@ -25,9 +26,6 @@
       <li><a class="dropdown-item" href="profile.php">Profile</a></li>
       <li><a class="dropdown-item" href="ads.php">New ADS</a></li>
       <li><a class="dropdown-item" href="logout.php">logout</a></li>
-    
-    
-    
   </div>
              </div> <?php }else{
      echo '<a href="login.php" class="log "><span class="pull-right">Login | singUp</span></a>';
@@ -35,6 +33,8 @@
             </div>
         </div>
     </div>
+    <!-- End  uppear navbar -->
+    <!-- default navbar -->
     <nav class="navbar navbar-inverse">
 
         <div class="container">
@@ -48,7 +48,6 @@
                 <a class="navbar-brand" href="index.php"> Home</a>
 
             </div>
-
             <div class="collapse navbar-collapse " id="app-nav">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item ">
@@ -63,9 +62,8 @@
                     <?php
                 }
                 ?>
-
                 </ul>
-
             </div>
         </div>
     </nav>
+      <!--End default navbar -->

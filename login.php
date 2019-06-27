@@ -8,8 +8,7 @@ if (isset($_SESSION['user'])) {
   header('location: index.php');
 }
 include 'ini.php';
-// check if action come from http
-// check form data from database
+// login form 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
   $user = $_POST['user'];
@@ -32,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     exit();
   }
 } 
+// End login form 
+// sign new user
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup'])){
 
   $email = filter_var( $_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -66,15 +67,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup'])){
       exit();
     }
   }
-
-  
 }
-
+// End sign new user
 ?>
 <div class="container login-page">
   <h2 class="text-center">
     <span class='login-span active' data-class='login'>Login </span> | <span data-class="signup"> signup</span>
   </h2>
+  <!-- login Form -->
   <form class="login" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
     <div class="form-group">
 
@@ -87,6 +87,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup'])){
       <input type="submit" name='login' class="form-control btn-primary" value="login">
     </div>
   </form>
+  <!-- End login Form -->
+  <!-- start signup form -->
   <form class="signup" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
     <div class="form-group">
       <input type="username" class="form-control" placeholder="Write your username" name="username" minlength="4" requird>
@@ -105,9 +107,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup'])){
       <input type="submit" class="form-control btn-success " name="signup" value="signup">
     </div>
   </form>
+  <!-- End signup form -->
 </div>
-
-
 <?php
 include $temp . 'footer.php';
 ?>

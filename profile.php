@@ -16,7 +16,7 @@ if(isset($_SESSION['user'])){
 <div class="information block">
     <div class="container">
         <h1 class="text-center">My profile</h1>
-        <!-- iformation block -->
+        <!-- information block -->
         <div class="panel panel-primary">
             <div class="panel-heading text-center"> 
             <i class="fas fa-address-card fa-2x"></i>
@@ -90,7 +90,6 @@ if(isset($_SESSION['user'])){
                                 <p class="lead"><?php echo $_SESSION['user'] ?></p>
                                 <p class="date"><?php echo $comment['date'] ?></p>
                                 </div>
-                                
                             </div>
                         </div>
                         <div class="col-md-9 comment-content">

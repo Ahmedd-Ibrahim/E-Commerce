@@ -1,13 +1,11 @@
 <?php
-
-
-
 /**
  * function to get any one data from any database by [id]
  * @par your selector in any table
  * @par any table from database
  * @par your Where selector
  * @par your value assign to where selector
+ * @return string [info from database]
  */
 function getDataById($selector, $table, $where, $value){
     global $con;
@@ -19,8 +17,10 @@ function getDataById($selector, $table, $where, $value){
     return $data[$selector];
 }
 
-// function to get  catogeries only activated
-
+/**
+ * function to get  catogeries only activated
+ * @return array
+ */
 function getCat(){
     global $con;
     $q = "SELECT * FROM categories WHERE visibility = 1";
@@ -32,17 +32,28 @@ function getCat(){
 
 /**
  * function to get items
- * @par item id
- * @return items
+ * @par where selector
+ * @par value for where selectoe 
+ * @return array
+ * 
+ * [use (all) in 2 @par if u wanna all items without where selctor ]
  */
 function getItem($where, $value){
     global $con;
-    $q = "SELECT * FROM items  WHERE $where =:id AND status= 1";
-    $query = $con->prepare($q);
+
+    if ( $where == 'all' && $value == 'all'){
+        $q = "SELECT * FROM items  WHERE status= 1";
+        $query = $con->prepare($q);
     $query->bindParam(':id', $value,PDO::PARAM_INT);
     $query->execute();
     $items = $query->fetchAll();
-
+    } else{
+        $q = "SELECT * FROM items  WHERE $where =:id AND status= 1";
+        $query = $con->prepare($q);
+        $query->bindParam(':id', $value,PDO::PARAM_INT);
+        $query->execute();
+        $items = $query->fetchAll();
+    }
     return $items;
 }
 /**
@@ -61,7 +72,11 @@ function getStatus($user){
 }
 
 /** ADMIN Functions */
-// get title page 
+
+/**
+ * get title page 
+ * @return string
+ */
 function getTitle()
 {
     global $page_title;
@@ -72,31 +87,14 @@ function getTitle()
         echo 'default';
     }
 }
-/**
- * function to check if data exists in database
- * @par Selector from table on database
- * @par table which have a selector
- * @par value which checked
- * @return  (integer) number if true , zero if false [if data exists gives number if not exist gives zero]
- * 
- */
-function checkUsername($select, $from, $value)
-{
-    global $con;
-    $stmt = "SELECT $select FROM $from WHERE $select=:value";
-    $query = $con->prepare($stmt);
-    $query->bindparam(':value', $value, PDO::PARAM_STR);
-    $query->execute();
-    $checkCount = $query->rowCount();
-    return $checkCount;
-}
 
 /**
  * redirect function
+ * @par message to show 
  * @par url which will direct to it
  * @par secends before direct
+ * @return redirect 
  */
-
 function myDirect($mesg, $url = null, $seconeds = 1){
     $var = '';
     if ($url ==  null){
@@ -109,38 +107,4 @@ function myDirect($mesg, $url = null, $seconeds = 1){
     header("refresh:$seconeds;url=$var");
     echo  $mesg;
     exit();
-}
-/**
- * count Item
- * @par column name
- * @par table name
- * @return integer
- */
-function countItem($column, $table, $where = null){
-    global $con;
-    $st = "SELECT COUNT($column) FROM $table " .' '."$where ";
-    $query= $con->prepare($st);
-    $query->execute();
-    return $query->fetchColumn();
-}
-/**
- * function to get latest update on database
- * @par $select the row selector
- * @par $table (column name) table which contain a selector example [* , userId, username]
- * @par $order (column name) ordered by example [userId]  can use 'all' word to display all rows
- * @par $limit ( integer ) result limit exapmle [3]
- */
-
-function latest($select = '*', $table, $order = 'id', $limit = '3', $oredring = 'DESC'){
-    global $con;
-    if ($limit == ' all'){ // add limit all to function
-        $lim = '';
-    }  else{
-        $lim = 'LIMIT ' . $limit;
-    }
-    $newStmt = "SELECT $select FROM $table ORDER BY $order $oredring ";
-    $query= $con->prepare($newStmt);
-    $query->execute();
-    $fetched = $query->fetchAll();
-    return $fetched;
 }
