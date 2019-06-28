@@ -2,6 +2,11 @@
 body{
     background-color: #f4f4f4;
 }
+h1{
+    color: #AAA;
+    font-weight: bold;
+}
+
 tr td{
     text-align: center
 }
@@ -38,7 +43,7 @@ tr th{
 
 /* form Edit members */
 .member-table  tbody:nth-child(even){
-    background-color: #e6e6e6;
+    background-color: #dee2e6;
 }
 .member-table  tbody{
    text-align: center;
@@ -141,9 +146,6 @@ margin-bottom: 0;
     padding: 4px;
 }
 
-
-
-
 .categories .collection {
     float:right;
     font-size: 15px;
@@ -171,7 +173,7 @@ margin-bottom: 0;
     margin: 3px
 }
 .categories .cat:nth-child(odd){
-    background-color: #e6e6e6
+    background-color: #dee2e6
 }
 .categories .cat .btn{
     margin-right: 1px;
@@ -218,7 +220,7 @@ margin-bottom: 0;
     margin: 3px
 }
 .item-table tbody:nth-child(odd){
-    background-color: #e6e6e6
+    background-color: #dee2e6
 }
 .items .item .btn{
     margin-right: 1px;
@@ -241,7 +243,7 @@ margin-bottom: 0;
 /* End items page */
 /* comment */
 .comment-table tbody:nth-child(odd){
-    background-color: #e6e6e6
+    background-color: #dee2e6
 }
 
 .comment .comment-text{

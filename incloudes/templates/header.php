@@ -39,7 +39,7 @@
 
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-nav" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -50,14 +50,12 @@
             </div>
             <div class="collapse navbar-collapse " id="app-nav">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="item.php">All Items</a>
-                    </li>
+                    
                     <?php
                     $getCats = getCat();
                     foreach ($getCats as $cat) { ?>
                         <li class="nav-item ">
-                            <a class="nav-link" href="item.php?pageid=<?php echo $cat['id'] . '&pagename=' . str_replace(' ', '-', $cat['name']); ?>"> <?php echo $cat['name']; ?></a>
+                            <a class="nav-link" href="index.php?pageid=<?php echo $cat['id'] . '&pagename=' . str_replace(' ', '-', $cat['name']); ?>"> <?php echo $cat['name']; ?></a>
                         </li>
                     <?php
                 }

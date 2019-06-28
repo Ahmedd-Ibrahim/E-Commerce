@@ -42,19 +42,24 @@ if(isset($_SESSION['user'])){
         </div>
         <!-- End information block -->
         <!-- ads block -->
-        <div class="panel panel-primary">
-            <div class="panel-heading">My ADs</div>
+        <div class="panel panel-primary ads">
+            <div class="panel-heading text-center"> <i class="fas fa-cog"></i> My ADs</div>
             <div class="panel-body">
                 
-                <?php if(! empty(getItem('user_id', $get['userId']))){
-                foreach(getItem('user_id', $get['userId']) as $userAds){?>
+                <?php if(! empty(getItem('pending', 'pending', $get['userId']))){
+                foreach(getItem('pending', 'pending',$get['userId']) as $userAds){?>
                      <div class="col-sm-6 col-md-3">
                 <div class="thumbnail item-box">
-                    <span class="price"> <?php echo $userAds['price'] ?></span>
+                    <span class="price"><?php echo $userAds['price'] ?></span>
+                    <?php  if($userAds['status'] == 0){
+                        echo '<span class="approval">Wating Approval</span>';
+                    } ?>
+                    
                     <img src="computer.png" class="img-fluid img-thumbnail" alt="Responsive image">
                     <div class="caption">
-                        <h3 class="name text-center"> <a href="item.php?do=item&id=<?php echo $userAds['item_id']; ?>" class="title"> <?php echo $userAds['name'] ?></a></h3>
+                        <h3 class="name text-center"> <a href="index.php?do=item&id=<?php echo $userAds['item_id']; ?>" class="title"> <?php echo $userAds['name'] ?></a></h3>
                         <p class="description text-center"><?php echo $userAds['description'] ?></p>
+                        <p class="add-date text-center"><?php echo $userAds['add_date'] ?></p>
                     </div>
 
                 </div>
@@ -70,7 +75,7 @@ if(isset($_SESSION['user'])){
         <!-- End ads block -->
         <!-- latest comments block -->
         <div class="panel panel-primary">
-            <div class="panel-heading">My latest Comments</div>
+            <div class="panel-heading text-center"><i class="fas fa-comments"></i> My latest Comments</div>
             <div class="panel-body">
                 <?php 
                 $q = "SELECT * FROM comments WHERE user_id =:user_id";
@@ -83,8 +88,8 @@ if(isset($_SESSION['user'])){
                         ?>
 <!-- show  last comments on profile -->
 <div class="row comment-row">
-                        <div class="col-md-3">
-                            <div class="avatar ">
+                        <div class="col-xs-3 col-md-2">
+                            <div class="avatar text-center">
                                 <img class="img-thumbnail img-circle img-responsive center-block" src="avatar.png" alt="avatar">
                                 <div class="avater-info">
                                 <p class="lead"><?php echo $_SESSION['user'] ?></p>
@@ -92,7 +97,7 @@ if(isset($_SESSION['user'])){
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-9 comment-content">
+                        <div class=" col-xs-9 col-md-10 comment-content">
                             <p class="lead">
                             <?php echo $comment['comment']; ?>
                             </p>

@@ -19,6 +19,10 @@ body{
 .upper-nav .btn{
     padding: 0;
 }
+.upper-nav  .btn-group>.btn:first-child{
+    margin-left: 0;
+    padding: 1px 34px
+}
 .navbar-nav .dropdown-menu{
     margin-top: 7px;
     background-color: #343a40;
@@ -26,6 +30,24 @@ body{
 }
 .dropdown-item{
     color: #d8dde1
+}
+.thumbnail{
+    padding: 0;
+    background-color: #dee2e6
+}
+
+ .img-thumbnail{
+    padding: 0;
+}
+.thumbnail .caption{
+    position: relative;
+}
+.thumbnail .add-by{
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    font-size: 15px;
+    color: #ada1a1;
 }
 
 /* form Edit members */
@@ -78,6 +100,9 @@ body{
 /* End index */
 
 /* start profile */
+.information .panel-primary {
+    background-color: #f4f4f4;
+}
 .information ul.list-unstyled li{
     padding: 10px;
 }
@@ -98,12 +123,26 @@ body{
     position: absolute;
     color: #fbf8f8;
 }
-
-/* End ads */
-/* item page */
-.item  .thumbnail{
-    border: none
+.ads .approval{
+    padding: 3px 18px;
+    top: 30px;
+    position: absolute;
+    background-color: #d69090;
+    color: #FFF;
+    
 }
+.ads .add-date{
+    font-size: 11px;
+    color: #ada1a1;
+    margin: -4px;
+    
+}
+/* End ads */
+/* index page */
+.item .panel-body{
+    background: #f4f4f4;
+}
+
 .item .item-ul li{
     padding: 5px;
     margin-bottom: 5px;
@@ -117,6 +156,12 @@ background-color: #EEE
     margin-right: 22px;
     display: inline-block;
     width: 60px;
+}
+.item .add-date{
+    font-size: 15px;
+    color: #ada1a1;
+    margin: -4px;
+    text-align: right
 }
 
 .comment  textarea{
@@ -151,11 +196,9 @@ background-color: #EEE
     left: -29px;
     top: 9px;
 }
-.comment-row .avater-info{
-    position: relative;
-    top: 0px;
-    left: 108px;
-
+.comment-row .img-thumbnail {
+    padding: 0;
+    width: 50%;
 }
 .comment-row .avater-info p:first-child{
     color: #007bff;
@@ -165,4 +208,4 @@ background-color: #EEE
     color: #776e6e;
     font-size: 12px;
 }
-/* End item page */
+/* End index page */

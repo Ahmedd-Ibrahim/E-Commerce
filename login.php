@@ -11,12 +11,12 @@ include 'ini.php';
 // login form 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
-  $user = $_POST['user'];
-  $pass = $_POST['pass'];
+  $user = filter_var( $_POST['user'], FILTER_SANITIZE_STRING);
+  $pass = filter_var( $_POST['pass'], FILTER_SANITIZE_STRING);
+  
   $hash = sha1($pass);
   $stmt  = "SELECT * FROM users WHERE  password=:password AND username =:username ";
   $query = $con->prepare($stmt);
-
   $query->bindparam(':username', $user, PDO::PARAM_STR);
   $query->bindparam(':password', $pass, PDO::PARAM_STR);
   $insert = $query->execute();
@@ -29,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
     $_SESSION['user-id'] =  $fetch['userId'] ;
     header('location: index.php');
     exit();
+  }else{
+    echo 'can not';
   }
 } 
 // End login form 
@@ -53,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signup'])){
     }
   }
   if(empty($error)){
-    $stmt  = "INSERT INTO `users`  (username, email, password ) VALUES (:username, :email, :password)";
+    $stmt  = "INSERT INTO `users`  (username, email, password, date ) VALUES (:username, :email, :password, now())";
     $query = $con->prepare($stmt);
     $query->bindparam(':username', $user, PDO::PARAM_STR);
     $query->bindparam(':email', $email, PDO::PARAM_STR);

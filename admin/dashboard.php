@@ -7,7 +7,7 @@ if (isset($_SESSION['username'])) {
     $lastUser = latest('*', 'users', 'userId', $limit);
     $lastItem= latest('*', 'items', 'item_id', $limit);
     $sql = "SELECT comments.*,users.fullName, items.name FROM comments  INNER JOIN users ON users.userId = comments.user_id
-    INNER JOIN items ON items.item_id = comments.id_item limit $limit";
+    INNER JOIN items ON items.item_id = comments.id_item ORDER BY comments.comment_id DESC limit $limit ";
     $query = $con->prepare($sql);
     $update = $query->execute();
     $lastComment = $query->fetchAll();

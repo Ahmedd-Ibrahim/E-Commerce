@@ -7,11 +7,11 @@ include 'ini.php';
 if (isset($_SESSION['user'])) {
     // insert item
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['insert-item'])) {
-        $name = $_POST['name'];
+        $name =  filter_var( $_POST['name'], FILTER_SANITIZE_STRING);
         $used = $_POST['status'];
-        $desc = $_POST['description'];
+        $desc =  filter_var( $_POST['description'], FILTER_SANITIZE_STRING);
         $price = $_POST['price'];
-        $made = $_POST['country'];
+        $made =  filter_var( $_POST['country'], FILTER_SANITIZE_STRING);
         $member_id = $_SESSION["user-id"];
         $cat_id = $_POST['cat'];
         $errors[] = '';
@@ -19,9 +19,10 @@ if (isset($_SESSION['user'])) {
         (empty($used) ? $errors[] =  "<div class='alert alert-danger'> status  is empty! </div>" : null);
         (empty($desc) ? $errors[] =  "<div class='alert alert-danger'> description  is empty! </div>" : null);
         (empty($price) ? $errors[] =  "<div class='alert alert-danger'> price  is empty! </div>" : null);
+        (empty($cat_id) ? $errors[] =  "<div class='alert alert-danger'> you must chose category </div>" : null);
         foreach ($errors as $error) {
             if (!empty($error)) {
-                echo $error;
+                
                 echo myDirect($error, 'back');
             }
         }
@@ -67,13 +68,13 @@ if (isset($_SESSION['user'])) {
                                         <div class="form-group row ">
                                             <label class="col-sm-1 col-label ">name</label>
                                             <div class="col-sm-4  ">
-                                                <input type="name" class="form-control live" data-class=".live-name" autocomplete="off" name='name' placeholder='Name of Item' required>
+                                                <input pattern=".{4,}" title="character must more than 4" type="name" class="form-control live" data-class=".live-name" autocomplete="off" name='name' placeholder='Name of Item' required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-1 col-form-label  ">description</label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control live" data-class=".live-description" autocomplete="off" name='description' placeholder="Add a description">
+                                                <input type="text"  pattern=".{4,}" title="character must more than 6" class="form-control live" data-class=".live-description" autocomplete="off" name='description' placeholder="Add a description">
                                             </div>
                                         </div>
                                         <div class="form-group row ">
@@ -85,13 +86,13 @@ if (isset($_SESSION['user'])) {
                                         <div class="form-group row ">
                                             <label class="col-sm-1 col-label  ">country</label>
                                             <div class="col-sm-4  ">
-                                                <input type="text" class="form-control" autocomplete="off" name="country" placeholder='Country of made' required>
+                                                <input type="text"  pattern=".{2,}" title="character must more than 2" class="form-control" autocomplete="off" name="country" placeholder='Country of made' required>
                                             </div>
                                         </div>
                                         <div class="form-group row ">
                                             <label class="col-sm-1 col-label">status</label>
                                             <div class="col-sm-4  ">
-                                                <select class="form-control" name="status">
+                                                <select class="form-control" name="status" required>
                                                     <option value="1">new</option>
                                                     <option value="2">like New</option>
                                                     <option value="3">used</option>
@@ -103,8 +104,8 @@ if (isset($_SESSION['user'])) {
                                         <div class="form-group row ">
                                             <label class="col-sm-1 col-label">categories</label>
                                             <div class="col-sm-4  ">
-                                                <select class="form-control" name="cat">
-                                                    <option value="1">...</option>
+                                                <select class="form-control" name="cat" required>
+                                                    <option value="0">...</option>
                                                     <?php
                                                     $qu = "SELECT id, name FROM `categories`";
                                                     $query = $con->prepare($qu);

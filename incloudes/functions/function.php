@@ -38,13 +38,20 @@ function getCat(){
  * 
  * [use (all) in 2 @par if u wanna all items without where selctor ]
  */
-function getItem($where, $value){
+function getItem($where, $value, $id = null){
     global $con;
 
     if ( $where == 'all' && $value == 'all'){
         $q = "SELECT * FROM items  WHERE status= 1";
         $query = $con->prepare($q);
     $query->bindParam(':id', $value,PDO::PARAM_INT);
+    $query->execute();
+    $items = $query->fetchAll();
+    }elseif ( $where == 'pending' && $value == 'pending') {
+        # code...
+        $q = "SELECT * FROM items WHERE user_id=:id";
+        $query = $con->prepare($q);
+    $query->bindParam(':id', $id, PDO::PARAM_INT);
     $query->execute();
     $items = $query->fetchAll();
     } else{

@@ -2,8 +2,9 @@
 
 $page_title = 'Categories';
 session_start();
+include 'ini.php';
 if (isset($_SESSION['username'])) {
-  include 'ini.php';
+
   if ($do == 'manage') { // genral page
     $sort = 'DESC';
     $sortArray = array('desc', 'asc');
@@ -374,5 +375,8 @@ elseif ($do == 'edit') { // start Edit script
     }
   }
   // end sub action
+} else{
+  $msg = '<div class="alert alert-danger">You don\'t Have permision to access to this page </div>';
+  echo myDirect($msg, 'index.php');
 }
 include $temp . 'footer.php';

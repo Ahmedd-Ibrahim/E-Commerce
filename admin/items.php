@@ -14,7 +14,7 @@ if (isset($_SESSION['username'])) {
       $queu = 'WHERE status = 0';
     }
     $q = "SELECT items.*, users.username , categories.name as catName FROM items INNER JOIN users on users.userId = user_id
-    INNER JOIN categories ON categories.id = cat_id $queu";
+    INNER JOIN categories ON categories.id = cat_id  $queu ORDER BY items.item_id DESC";
     $query = $con->prepare($q);
     $update = $query->execute();
     $fetchitems = $query->fetchAll();

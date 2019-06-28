@@ -3,10 +3,11 @@
  * manage memmbers [ Edit || update || Delete || Add || status]
  */
 session_start();
+$page_title = 'members';
+include 'ini.php';
+    
 if(isset($_SESSION['username'])){
     
-    $page_title = 'members';
-    include 'ini.php';
     
     $do = (isset($_GET['do'])? $_GET['do'] : 'manage' );
    
@@ -16,7 +17,7 @@ if(isset($_SESSION['username'])){
       if(isset($_GET['page']) && $_GET['page'] == 'pending'){  // check if will display only activate members
         $queu = 'WHERE regStatus = 0';
       }
-            $q = "SELECT * FROM `users`  $queu";
+            $q = "SELECT * FROM `users`  $queu ORDER BY `userId`desc";
             $query = $con->prepare($q);
             $update = $query->execute();
             $fetchUsers = $query->fetchAll();
@@ -53,6 +54,9 @@ foreach($fetchUsers as $member){
         <a href="members.php?do=delete&id=<?php echo $member['userId']; ?>" class="btn btn-danger ">Delete</a>
         <?php if($member['regStatus'] == 0){  ?>
           <a href="members.php?do=active&id=<?php echo $member['userId']; ?>" class="btn btn-info ">active</a>
+          <?php
+        } else{ ?>
+          <a href="members.php?do=deactive&id=<?php echo $member['userId']; ?>" class="btn btn-info ">Deactive</a>
           <?php
         }
           ?>
@@ -252,15 +256,22 @@ elseif($do == 'delete'){
 // end delete script
 elseif($do == 'active'){ // start activate script
   $userId = intval($_GET['id']);
-  echo 'active';
   $q = "UPDATE users SET regStatus=1 WHERE userId=:user_id";
+  $query = $con->prepare($q);
+  $query->bindparam(':user_id',$userId, PDO::PARAM_INT);
+  $query->execute();
+  header('location:members.php');
+  exit(); // end activate script
+} elseif ($do == 'deactive'){ // start deactive script
+  $userId = intval($_GET['id']);
+  $q = "UPDATE users SET regStatus=0 WHERE userId=:user_id";
   $query = $con->prepare($q);
   $query->bindparam(':user_id',$userId, PDO::PARAM_INT);
   $query->execute();
   header('location:members.php');
   exit();
 }
-// end activate script
+
 
  else{
    if($do != 'update'){
@@ -309,5 +320,8 @@ if (isset($_POST['update']) && $do == 'update') {
   echo "</div>";
    
 }
+}else{
+  $mesg = '<div class="alert alert-danger">can\'t access to this page directly </div>';
+            echo myDirect($mesg, 'index.php');
 }
 include $temp . 'footer.php';

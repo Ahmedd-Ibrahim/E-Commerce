@@ -16,7 +16,7 @@ if (isset($_SESSION['username'])) {
         }
         // $q = "SELECT * FROM `comments`  $queu";
         $sql = "SELECT comments.*,users.username, items.name FROM comments  INNER JOIN users ON users.userId = comments.user_id
-        INNER JOIN items ON items.item_id = comments.id_item  $queu";
+        INNER JOIN items ON items.item_id = comments.id_item  $queu ORDER BY comments.comment_id DESC ";
         $query = $con->prepare($sql);
         $update = $query->execute();
         $fetchComments = $query->fetchAll();
@@ -78,7 +78,7 @@ elseif ($do == 'edit') { // edit page
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $id =  intval($_GET['id']);
         $stmt = "SELECT comments.*,users.fullName, items.name FROM comments INNER JOIN items 
-        ON items.item_id = comments.id_item inner JOIN users on items.user_id = users.userId WHERE comments.comment_id=:comment_id ";
+        ON items.item_id = comments.id_item inner JOIN users on items.user_id = users.userId WHERE comments.comment_id=:comment_id";
         $query = $con->prepare($stmt);
         $query->bindparam(':comment_id', $_GET['id'], PDO::PARAM_INT);
         $insert = $query->execute();
