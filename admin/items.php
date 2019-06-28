@@ -2,8 +2,9 @@
 
 $page_title = 'Items';
 session_start();
+include 'ini.php';
 if (isset($_SESSION['username'])) {
-  include 'ini.php';
+  
 
   if ($do == 'manage') {
     // start view Item and manage script 
@@ -21,8 +22,8 @@ if (isset($_SESSION['username'])) {
     ?>
     <div class="container">
       <h1 class="text-center">Mange Items</h1>
-      <div class="table-responsive">
-        <table class="table table-striped table-dark table-bordered ">
+      <div class="table-responsive item-table">
+        <table class="table table-dark table-bordered ">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -229,8 +230,9 @@ if (isset($_SESSION['username'])) {
   } else {
     echo 0;
   }
-  $rowCount = checkUsername('item_id', 'items', $id);
+  $rowCount = checkUsername('item_id', 'items', $id); // check if item exists
   if ($rowCount !== 0 && isset($_SERVER['HTTP_REFERER'])) {  ?>
+  <!-- Form Edit item -->
       <form class="form-group edit-form" action="?do=update&id=<?php echo $_GET['id'] ?>" method="POST">
         <form class="form-group add-form" action="?do=insert" method="POST">
           <div class="container">
@@ -291,7 +293,6 @@ if (isset($_SESSION['username'])) {
               <label class="col-sm-1 col-label">categories</label>
               <div class="col-sm-4  ">
                 <select class="form-control" name="cat">
-
                   <?php
                   $qu = "SELECT id, name FROM `categories`";
                   $query = $con->prepare($qu);
@@ -314,19 +315,18 @@ if (isset($_SESSION['username'])) {
         </form>
         <!-- End add script -->
       </form>
+        <!--End Form Edit item -->
       <?php
       $item_id = $_GET['id'];
       $sq = "SELECT comments.*,users.fullName, items.name FROM comments INNER JOIN items ON items.item_id = comments.id_item inner JOIN users on items.user_id = users.userId WHERE items.item_id=:item_id ";
-
       $query = $con->prepare($sq);
       $query->bindparam(':item_id', $item_id, PDO::PARAM_INT);
       $update = $query->execute();
       $row = $query->rowCount();
-    
       $lastComment = $query->fetchAll();
-    
 ?>
-      <div class="box">
+<!-- start comments at edit page  -->
+      <div class="box">   
                       
                          <div class="users"><?php foreach ($lastComment as $comment) { ?>
 <?php
@@ -350,8 +350,8 @@ if (isset($_SESSION['username'])) {
     $msg = '<div class="alert alert-info">no such id or username </div>';
     echo myDirect($msg, 'back');
   }
-} elseif ($do == 'delete') {
-
+//  <!-- start comments at edit page  -->
+} elseif ($do == 'delete') { // delet action
   $stmt = "DELETE FROM `items` WHERE item_id=:item_id";
   $item_id = intval($_GET['id']);
   $check = checkUsername('item_id', 'items', $item_id);
@@ -367,8 +367,7 @@ if (isset($_SESSION['username'])) {
     echo myDirect($msg, 'dashboard.php');
   }
 } elseif ($do == 'update') { //start update script
-
-  if (isset($_POST['update']) && $do == 'update') { //  update item 
+  if (isset($_POST['update']) && $do == 'update') { // check if set update
 
     echo "<div class='container'>";
     echo "<h1 class='text-center'></h1>";
@@ -414,10 +413,16 @@ if (isset($_SESSION['username'])) {
       }
     }
     echo "</div>";
-  } else { // come direct to page
+  } else { // if come direct to page
     $direct = '<div class="alert alert-danger">can\'t browess this page dirctly </div>';
     echo myDirect($direct, 'back');
   }
   // end update script
-} elseif ($do == 'approve') { }
+} 
+} else{
+  $msg = '<div class="alert alert-danger">login to browess this page dirctly </div>';
+    echo myDirect($msg, 'index.php');
+    exit(); 
+  
 }
+include $temp . 'footer.php';

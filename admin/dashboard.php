@@ -12,6 +12,7 @@ if (isset($_SESSION['username'])) {
     $update = $query->execute();
     $lastComment = $query->fetchAll();
     ?>
+    <!-- start dashboard pending and approval -->
     <div class="dashboard text-center">
         <div class="container">
             <h1 class="dash text-center">Dashboard</h1>
@@ -19,25 +20,39 @@ if (isset($_SESSION['username'])) {
                 <div class="col-md-3">
                     <div class="box ">
                         total members
-                        <span><a href="members.php"><?php echo countItem('userId', 'users'); ?></a></span>
+                        <span>
+                        
+                            <a href="members.php">
+                            <i class="fa fa-users"></i>
+                                <?php echo countItem('userId', 'users'); ?></a>
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="box">
                         pending members
-                        <span><a href="members.php?page=pending"><?php echo countItem('userId', 'users', 'WHERE regStatus = 0') ?></a></span>
+                        <span><a href="members.php?page=pending">
+                        <i class="fas fa-user-plus"></i>
+                            <?php echo countItem('userId', 'users', 'WHERE regStatus = 0') ?>
+                        </a></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="box">
                         total items
-                        <span><a href="items.php"><?php echo countItem('item_id', 'items') ?> </a></span>
+                        <span><a href="items.php">
+                        <i class="fas fa-hourglass"></i>
+                            <?php echo countItem('item_id', 'items') ?>
+                         </a></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="box">
                         Pending Items
-                        <span><a href="items.php?page=pending"><?php echo countItem('item_id', 'items', 'WHERE status = 0') ?></a></span>
+                        <span><a href="items.php?page=pending">
+                        <i class="fas fa-hourglass-start"></i>
+                            <?php echo countItem('item_id', 'items', 'WHERE status = 0') ?>
+                        </a></span>
                     </div>
                 </div>
             </div>
@@ -45,68 +60,49 @@ if (isset($_SESSION['username'])) {
             <div class="col-md-3">
                     <div class="box ">
                         total comments
-                        <span><a href="comments.php"><?php echo countItem('comment_id', 'comments'); ?></a></span>
+                        <span><a href="comments.php">
+                        <i class="fas fa-comment-dots"></i>
+                            <?php echo countItem('comment_id', 'comments'); ?>
+                        </a></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="box">
                         Pending comments
-                        <span><a href="comments.php?page=pending"><?php echo countItem('comment_id', 'comments', 'WHERE status = 0') ?></a></span>
+                        <span><a href="comments.php?page=pending">
+                        <i class="fas fa-comment-medical"></i>
+                            <?php echo countItem('comment_id', 'comments', 'WHERE status = 0') ?>
+                        </a></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="box ">
-                        total members
-                        <span><a href="members.php"><?php echo countItem('userId', 'users'); ?></a></span>
+                    total categories
+                        <span><a href="categories.php">
+                        <i class="fas fa-file"></i>
+                            <?php echo countItem('id', 'categories'); ?>
+                        </a></span>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="box ">
-                        total members
-                        <span><a href="members.php"><?php echo countItem('userId', 'users'); ?></a></span>
+                        pending categories
+                        <span><a href="categories.php?page=pending">
+                        <i class="fas fa-file-medical"></i>    
+                        <?php echo countItem('id', 'categories', 'WHERE visibility = 0'); ?>
+                    </a></span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+        <!-- End dashboard pending and approval -->
+        <!-- start feature -->
     <div class="feature">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="box">
-                        <h4>latest <?php echo $limit; ?> users</h4>
-                        <div class="users"><?php foreach ($lastUser as $users) { ?>
-<?php
-                                echo'<div class="user">' ;
-                                        echo $users['fullName'] ; ?>
-                                        <span class="latest-span">
-                                         <a href="members.php?do=edit&id=<?php echo $users['userId']; ?>" class="btn btn-success">Edit </a>
-                                         <a href="members.php?do=delete&id=<?php echo $users['userId']; ?>" class="btn btn-danger ">Delete</a>
-                                         </span>
-                               <?php  echo '</div>';
-                            } ?></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="box">
-                        <h4>latest <?php echo $limit; ?> items</h4>
-                        <div class="users"><?php foreach ($lastItem as $item) { ?>
-<?php
-                                echo'<div class="user">' ;
-                                        echo $item['name'] ; ?>
-                                        <span class="latest-span">
-                                         <a href="items.php?do=edit&id=<?php echo $item['item_id']; ?>" class="btn btn-success">Edit </a>
-                                         <a href="items.php?do=delete&id=<?php echo $item['item_id']; ?>" class="btn btn-danger ">Delete</a>
-                                         </span>
-                               <?php  echo '</div>';
-                            } ?></div>
-                    </div>
-                </div>
-            </div>
-            <!-- second row -->
-            <div class="row">
-            <div class="col-md-6">
-                    <div class="box box-comment">
+                <div class="box box-comment">
                         <h4>latest <?php echo $limit; ?> comments</h4>
                         <div class="users"><?php foreach ($lastComment as $comment) { ?>
 <?php
@@ -129,33 +125,36 @@ if (isset($_SESSION['username'])) {
                                     }
                                     ?>
                                           </div>
-
-                                        
                                         <span class="latest-span">
                                          <!-- <a href="members.php?do=edit&id=<?php echo $comment['comment_id']; ?>" class="btn btn-success">Edit </a>
                                          <a href="members.php?do=delete&id=<?php echo $comment['comment_id']; ?>" class="btn btn-danger ">Delete</a> -->
                                          </span>
                                <?php  echo '</div>';
                             } ?></div>
-                    </div>
                 </div>
+            </div>
                 <div class="col-md-6">
-                    <div class="box">
-                        <h4>latest <?php echo $limit; ?> users</h4>
-                        <div class="users"><?php foreach ($lastUser as $users) { ?>
+                <div class="box">
+                        <h4>latest <?php echo $limit; ?> items</h4>
+                        <div class="users"><?php foreach ($lastItem as $item) { ?>
 <?php
                                 echo'<div class="user">' ;
-                                        echo $users['username'] ; ?>
+                                        echo $item['name'] ; ?>
                                         <span class="latest-span">
-                                         <a href="members.php?do=edit&id=<?php echo $users['userId']; ?>" class="btn btn-success">Edit </a>
-                                         <a href="members.php?do=delete&id=<?php echo $users['userId']; ?>" class="btn btn-danger ">Delete</a>
+                                         <a href="items.php?do=edit&id=<?php echo $item['item_id']; ?>" class="btn btn-success">Edit </a>
+                                         <a href="items.php?do=delete&id=<?php echo $item['item_id']; ?>" class="btn btn-danger ">Delete</a>
                                          </span>
                                <?php  echo '</div>';
                             } ?></div>
                     </div>
                 </div>
             </div>
+       
+                
+            </div>
         </div>
+        <!-- End feature -->
+
     </div>
 
 <?php
@@ -163,6 +162,5 @@ if (isset($_SESSION['username'])) {
 } else {
     header('location: index.php');
 }
-
-
+include $temp . 'footer.php';
 ?>

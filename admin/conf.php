@@ -1,6 +1,4 @@
 <?php
-
-
 $dsn = 'mysql:host=localhost;dbname=shop';
 $user = 'root';
 $pass = '';
@@ -10,7 +8,6 @@ $option = array(
 try { 
     $con = new PDO($dsn, $user, $pass, $option);
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-   
 }
 catch (PDOException $e){
     die('You Failed to connect into database your error is' . $e->getMessage());

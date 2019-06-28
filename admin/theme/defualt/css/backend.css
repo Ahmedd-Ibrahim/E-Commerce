@@ -2,6 +2,12 @@
 body{
     background-color: #f4f4f4;
 }
+tr td{
+    text-align: center
+}
+tr th{
+    text-align: center
+}
 .login{
     width: 300px;
     margin: 100px auto;
@@ -23,13 +29,19 @@ body{
     background-color: #343a40;
     font-size: 15px;
 }
+.dropdown-menu>li>a{
+    color: #bbb
+}
 .dropdown-item{
     color: #d8dde1
 }
 
 /* form Edit members */
-.table-responsive tbody:nth-child(even){
-    background-color: #767676;
+.member-table  tbody:nth-child(even){
+    background-color: #e6e6e6;
+}
+.member-table  tbody{
+   text-align: center;
 }
 .edit-form{
     width: 80%;
@@ -49,11 +61,14 @@ body{
     font-size: 20px;
     font-family: cursive;
     font-weight: bold;
-    background: #DDD;
+    background: #dee2e6;
     border: 1px solid #CCC;
     color: cadetblue;
     margin-bottom: 3px;
 
+}
+.dashboard svg:not(:root).svg-inline--fa{
+    font-size: -webkit-xxx-large;
 }
 .dashboard span{
     display: block;
@@ -61,6 +76,16 @@ body{
     padding: 20px;
     color: #6a6565;
     
+}
+.dashboard span a{
+    font-size: 15px;
+    
+}
+.dashboard .fa-users{
+    font-size: xx-large;
+}
+.dashboard a:hover{
+    text-decoration: unset;
 }
 /* End dashboard page */
 /* start feature */
@@ -83,7 +108,7 @@ margin-bottom: 0;
     margin-bottom: 5px;
 }
 .feature .box .user:nth-child(even) {
-    background: #fff
+    background: #dee2e6;
 }
 
 .feature .box .users .user .latest-span{
@@ -95,6 +120,8 @@ margin-bottom: 0;
 .feature .box .users .user {
     margin: 10px auto;
     overflow: hidden;
+    padding: 5px;
+    font-size: 17px;
 }
 .feature .box .users .user .btn{
     padding: 0 8px;
@@ -110,7 +137,8 @@ margin-bottom: 0;
     height: 0px;
 }
 .categories h4 {
-    display: inline-block
+    display: inline-block;
+    padding: 4px;
 }
 
 
@@ -189,7 +217,7 @@ margin-bottom: 0;
 .items  hr {
     margin: 3px
 }
-.items .item:nth-child(odd){
+.item-table tbody:nth-child(odd){
     background-color: #e6e6e6
 }
 .items .item .btn{
@@ -212,6 +240,10 @@ margin-bottom: 0;
 /*End manage Item*/
 /* End items page */
 /* comment */
+.comment-table tbody:nth-child(odd){
+    background-color: #e6e6e6
+}
+
 .comment .comment-text{
     max-width: 200px;
 }

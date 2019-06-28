@@ -4,14 +4,12 @@
  */
 session_start();
 if (isset($_SESSION['username'])) {
-
-    $page_title = 'Comments';
+    $page_title = 'Mange Comments';
     include 'ini.php';
 
     $do = (isset($_GET['do']) ? $_GET['do'] : 'manage');
 
     if ($do == 'manage') { // start manage comments  dashboard page
-
         $queu = '';
         if (isset($_GET['page']) && $_GET['page'] == 'pending') {  // check if will display only activate comments
             $queu = ' WHERE comments.status = 0';
@@ -26,8 +24,9 @@ if (isset($_SESSION['username'])) {
         ?>
         <div class="container comment">
             <h1 class="text-center">Mange comments</h1>
-            <div class="table-responsive">
-                <table class="table table-striped table-dark table-bordered ">
+            <!-- mange table -->
+            <div class="table-responsive comment-table">
+                <table class="table table-dark table-bordered ">
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
@@ -69,11 +68,12 @@ if (isset($_SESSION['username'])) {
                 } ?>
                 </table>
             </div>
+             <!--End mange table -->
         </div>
 
     <?php
 }  // End manage page && dashboard
-elseif ($do == 'edit') {
+elseif ($do == 'edit') { // edit page 
     // get data which will edit and display inside inputs and catch id which will controlled
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $id =  intval($_GET['id']);
@@ -88,6 +88,7 @@ elseif ($do == 'edit') {
         echo 0;
     }
     ?>
+    <!--Start Edit form -->
         <form class="form-group edit-form" action="?do=update" method="POST">
             <div class="container">
                 <h1>Edit comment</h1>
@@ -97,11 +98,11 @@ elseif ($do == 'edit') {
                         <?php echo $fetch['fullName']; ?>
                     </div>
                 </div>
-                <input type="hidden" name='userId' value="<?php echo $id ?>">
+                <input type="hidden" name='comment_id' value="<?php echo $id ?>">
                 <div class="form-group row">
-                    <label for="password" class="col-sm-1 col-form-label">comment</label>
+                    <label for="comment" class="col-sm-1 col-form-label">comment</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" autocomplete="off" id="password" required name='password' placeholder="<?php echo  $fetch['comment']; ?>">
+                        <input type="text" class="form-control" autocomplete="off" id="comment" required name='comment' placeholder="<?php echo  $fetch['comment']; ?>">
                     </div>
                 </div>
                 <div class="form-group row ">
@@ -114,7 +115,7 @@ elseif ($do == 'edit') {
                 </div>
             </div>
         </form>
-
+    <!--End Edit form -->
         <?php
         if (isset($_POST['update']) && $do == 'update') { // when update profile or update any members
             echo "<div class='container'>";
@@ -153,9 +154,26 @@ elseif ($do == 'edit') {
             }
             echo "</div>";
         }
-    }
-    // start delete script
-    elseif ($do == 'delete') {
+    } elseif ($do == 'update'){
+        $errorComment = '';
+        $comment_id = $_POST['comment_id'];
+        $comment =  $_POST['comment'];
+        (empty($comment) ? $errorComment = "<div class='alert alert-danger' >Comment is empty </div>" : null);
+        if (empty($errorComment) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+            $q = "UPDATE comments SET comment=:comment WHERE comment_id=:comment_id";
+            $query = $con->prepare($q);
+            $query->bindparam(':comment', $comment, PDO::PARAM_STR);
+            $query->bindparam(':comment_id', $comment_id, PDO::PARAM_INT);
+            $update = $query->execute();
+            if ($update == true) {
+                $msg =  '<div class="alert alert-success">success</div>';
+                echo myDirect($msg,'comments.php');
+                exit();
+            } else {
+                echo 'erorr within update';
+            }
+    }}
+    elseif ($do == 'delete') { // start delete script
         $stmt = "DELETE FROM `comments` WHERE comment_id=:comment_id";
         $comment_id = intval($_GET['id']);
         $query = $con->prepare($stmt);
@@ -168,7 +186,6 @@ elseif ($do == 'edit') {
     // end delete script
     elseif ($do == 'active') { // start activate script
         $comment_id = intval($_GET['id']);
-       
         $q = "UPDATE comments SET status=1 WHERE comment_id=:user_id";
         $query = $con->prepare($q);
         $query->bindparam(':user_id', $comment_id, PDO::PARAM_INT);
@@ -177,7 +194,7 @@ elseif ($do == 'edit') {
         myDirect($msg,'back',0.5);
        
         exit();
-    } elseif ($do == 'deactive') {
+    } elseif ($do == 'deactive') {// start deactive script
         $comment_id = intval($_GET['id']);
        
         $q = "UPDATE comments SET status=0 WHERE comment_id=:user_id";
@@ -190,11 +207,11 @@ elseif ($do == 'edit') {
         exit();
     }
     // end activate script
-
     else {
-        if ($do != 'update') {
+        if ($do != 'update') { // error when direct url
             $mesg = '<div class="alert alert-danger">can\'t access to this page directly </div>';
             echo myDirect($mesg, 'back');
         }
     }
 }
+include $temp .'footer.php';

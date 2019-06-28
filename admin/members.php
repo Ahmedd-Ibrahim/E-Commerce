@@ -24,8 +24,8 @@ if(isset($_SESSION['username'])){
     ?>
         <div class="container">
             <h1 class="text-center">Mange Member</h1>
-            <div class="table-responsive">
-        <table class="table table-striped table-dark table-bordered ">
+            <div class="table-responsive member-table">
+        <table class="table table-dark table-bordered ">
   <thead>
     <tr>
       <th scope="col">User Id</th>
@@ -310,3 +310,4 @@ if (isset($_POST['update']) && $do == 'update') {
    
 }
 }
+include $temp . 'footer.php';

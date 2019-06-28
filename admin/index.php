@@ -2,8 +2,7 @@
 session_start();
 $noNav = '';
 $page_title = 'Login';
-if(isset($_SESSION['username'])){
-   
+if(isset($_SESSION['username'])) {
     header('location: dashboard.php');
 }
 include 'ini.php';
@@ -11,7 +10,7 @@ include 'ini.php';
 // check if action come from http
 // check form data from database
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if(isset($_POST['submit'])){
+    if(isset($_POST['submit'])) {
     $user = $_POST['username'];
     $pass = $_POST['pass'];
     $hash = sha1($pass);
@@ -24,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $count = $query->rowCount();
     $fetch = $query->fetch();
     
-    if ($count == true){
+    if ($count == true) {
         echo 'checked and it\'s true';
         $_SESSION['username'] = $user;
         $_SESSION['groupId'] = $fetch['groupId'];

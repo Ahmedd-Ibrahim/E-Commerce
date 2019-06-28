@@ -1,23 +1,23 @@
 <?php
 
-$page_title = '';
+$page_title = 'Categories';
 session_start();
 if (isset($_SESSION['username'])) {
   include 'ini.php';
-
-  if ($do == 'manage') {
-    //   global $con;
-    // $qu = "SELECT * FROM `categories`";
-    // $query = $con->prepare($qu);
-    // $query->execute();
-    // $categories = $query->fetchAll();
+  if ($do == 'manage') { // genral page
     $sort = 'DESC';
     $sortArray = array('desc', 'asc');
     if (isset($_GET['sort']) && in_array($_GET['sort'], $sortArray)) {
       $sort = $_GET['sort'];
     }
-    $categories = latest('*', 'categories', 'id', 'all', $sort);
+    // condiditon to dinimc categories if pending
+      if (isset($_GET['page']) && $_GET['page'] == 'pending'){
+        $categories = latest('*', 'categories', 'id', 'all', $sort, 'pending');
+      } else{
+        $categories = latest('*', 'categories', 'id', 'all', $sort);
+      }
     ?>
+    <!-- Start mange Categories -->
     <div class="container categories">
       <h1 class="text-center">Manage Categories</h1>
       <div class="panel panel-default">
@@ -35,7 +35,7 @@ if (isset($_SESSION['username'])) {
         </div>
         <div class="panel-body">
           <?php
-          foreach ($categories as $cat) {
+          foreach ( $categories as $cat) {
             echo '<div class="cat">';
             echo '<h4>' . $cat['name'] . '</h4>';
             ?>
@@ -46,19 +46,18 @@ if (isset($_SESSION['username'])) {
             echo '<a href="?do=visibility&id=' . $cat['id'] . ' &vis=' . $cat['visibility'] . '" class="btn btn-info"> ' . ($cat['visibility'] == 0 ? 'display' : 'hidden') . ' </a>';
             echo '<span class="btn btn-danger">' . ($cat['allow_comment'] == 0 ? 'Disable comment' : 'Enable') . ' </span>';
             echo '<span class="btn btn-secondary">' . ($cat['allow_ads'] == 0 ? 'Remove Ads' : 'Add') . '</span>';
-            //
             echo "</div>";
-
             echo '<hr></div>';
           }
-
           ?>
         </div>
       </div>
       <a href="?do=add" class="btn btn-primary">Add New Categories</a>
     </div>
+    <!-- End mange Categories -->
 
   <?php
+  
 } elseif ($do == 'add') {  ?>
     <!-- Start add script -->
     <form class="form-group edit-form" action="?do=insert" method="POST">
@@ -87,11 +86,11 @@ if (isset($_SESSION['username'])) {
           <label class="col-sm-2 control-label  text-center">Visible</label>
           <div class="col-sm-4  ">
             <div>
-              <input type="radio" id="vis-yes" name='visible' checked value="0">
+              <input type="radio" id="vis-yes" name='visible' checked value="1">
               <label for="vis-yes">Yes</label>
             </div>
             <div>
-              <input type="radio" id="vis-no" name='visible' value="1">
+              <input type="radio" id="vis-no" name='visible' value="0">
               <label for="vis-no">no</label>
             </div>
           </div>
@@ -102,11 +101,11 @@ if (isset($_SESSION['username'])) {
           <label class="col-sm-2 control-label text-center">Allow commenting</label>
           <div class="col-sm-4  ">
             <div>
-              <input type="radio" id="comment-yes" name='allow-comment' checked value="0">
+              <input type="radio" id="comment-yes" name='allow-comment' checked value="1">
               <label for="comment-yes">Yes</label>
             </div>
             <div>
-              <input type="radio" id="comment-no" name='allow-comment' value="1">
+              <input type="radio" id="comment-no" name='allow-comment' value="0">
               <label for="comment-no">no</label>
             </div>
           </div>
@@ -163,7 +162,10 @@ if (isset($_SESSION['username'])) {
         $mesg = '<div class="alert alert-danger">This categories is exist </div>';
         echo myDirect($mesg, 'back');
       } else {  // insert categories data
-        $q = "INSERT INTO `categories` (name, description, ordering, visibility, allow_comment, allow_ads, date) values(:name, :description, :ordering, :visible, :allow_comment, :allow_ads , now())";
+        $user_id = $_SESSION['user_id'];
+        echo $user_id;
+        $q = "INSERT INTO `categories` (name, description, ordering, visibility, allow_comment, allow_ads, date, user_id) 
+        values(:name, :description, :ordering, :visible, :allow_comment, :allow_ads , now(), 1)";
         $query = $con->prepare($q);
         $query->bindparam(':name', $name, PDO::PARAM_STR);
         $query->bindparam(':description', $desc, PDO::PARAM_STR);
@@ -171,6 +173,7 @@ if (isset($_SESSION['username'])) {
         $query->bindparam(':visible', $visible, PDO::PARAM_INT);
         $query->bindparam(':allow_comment', $comment, PDO::PARAM_INT);
         $query->bindparam(':allow_ads', $ads, PDO::PARAM_INT);
+        
         $update = $query->execute();
         if ($update == true) {
           $success = '<div class="alert alert-success">success and will inserted</div>';
@@ -179,7 +182,6 @@ if (isset($_SESSION['username'])) {
       }
     }
     echo "</div>";
-  
   }
   
   else { // come direct to page
@@ -187,7 +189,6 @@ if (isset($_SESSION['username'])) {
     echo myDirect($direct, 'back');
   }
 } // End insert script 
-
 elseif ($do == 'edit') { // start Edit script
   // get data which will edit and display inside inputs and catch id which will controlled
   if (isset($_GET['id']) && is_numeric($_GET['id'])) {
@@ -201,10 +202,10 @@ elseif ($do == 'edit') { // start Edit script
     echo 0;
   }
   ?>
+  <!-- start Edit categories -->
     <form class="form-group edit-form" action="?do=update&id=<?php echo $_GET['id']?>" method="POST">
       <div class="container">
         <h1>Edit categories</h1>
-
         <div class="form-group row ">
           <label class="col-sm-2 col-label  text-center">name</label>
           <div class="col-sm-4  ">
@@ -287,17 +288,12 @@ elseif ($do == 'edit') { // start Edit script
         </div>
       </div>
     </form>
-
+  <!-- start Edit categories -->
     <?php
-   
     }
   // End Edit script
   elseif ($do == 'update') {
-
-
-
     if (isset($_POST['update']) && $do == 'update') { // when update profile or update any members
-  
       echo "<div class='container'>";
       echo "<h1 class='text-center'></h1>";
       $name = $_POST['name'];
@@ -339,16 +335,13 @@ elseif ($do == 'edit') { // start Edit script
         }
       }
       echo "</div>";
-    } else { // come direct to page
+    } else { //come direct to page
        $direct = '<div class="alert alert-danger">can\'t browess this page dirctly </div>';
        echo myDirect($direct, 'back');
      }
-
-
    } elseif ($do == 'delete' &&  isset($_SERVER['HTTP_REFERER'])) {
     $stmt = "DELETE FROM `categories` WHERE id=:userId";
     $userId = intval($_GET['id']);
-    
     $query = $con->prepare($stmt);
     $query->bindparam(':userId', $userId, PDO::PARAM_INT);
     $query->execute();
@@ -357,12 +350,9 @@ elseif ($do == 'edit') { // start Edit script
       $msg = '<div class="alert alert-info">success Delete Member </div>';
       echo myDirect($msg,'back',1);
     }
-  
-
     }
   // sub action
   if ($do == 'visibility') {
-
     if ($_GET['vis'] == 0) {
       $catId =  $_GET['id'];
       $q2 = "UPDATE categories SET  visibility=1 WHERE id =:id";
@@ -383,6 +373,6 @@ elseif ($do == 'edit') { // start Edit script
       }
     }
   }
-
   // end sub action
 }
+include $temp . 'footer.php';

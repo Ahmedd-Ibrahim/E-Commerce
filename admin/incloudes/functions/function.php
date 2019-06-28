@@ -18,13 +18,13 @@ function getTitle()
  * @return  (integer) number if true , zero if false [if data exists gives number if not exist gives zero]
  * 
  */
-function checkUsername($select, $from, $value) {
+function checkUsername($select, $from, $value) 
+{
     global $con;
     $stmt = "SELECT $select FROM $from WHERE $select=:value";
     $query = $con->prepare($stmt);
     $query->bindparam(':value', $value, PDO::PARAM_STR);
     $query->execute();
-    // $fetch = $query->fetch();
     $checkCount = $query->rowCount();
     return $checkCount;
  }
@@ -33,9 +33,11 @@ function checkUsername($select, $from, $value) {
  * redirect function
  * @par url which will direct to it
  * @par secends before direct
+ * @return string with action
  */
 
-  function myDirect($mesg, $url = null, $seconeds = 1){
+  function myDirect($mesg, $url = null, $seconeds = 1)
+  {
     $var = '';
       if ($url == null){
           $var = 'index.php';
@@ -55,7 +57,8 @@ function checkUsername($select, $from, $value) {
    * @par table name
    * @return integer
    */
-  function countItem($column, $table,$where = null){
+  function countItem($column, $table,$where = null)
+  {
       global $con;
         $st = "SELECT COUNT($column) FROM $table".' '."$where ";
         $query= $con->prepare($st);
@@ -68,16 +71,36 @@ function checkUsername($select, $from, $value) {
    * @par $table (column name) table which contain a selector example [* , userId, username]
    * @par $order (column name) ordered by example [userId]  can use 'all' word to display all rows
    * @par $limit ( integer ) result limit exapmle [3]
+   * @return array
    */
-
-   function latest($select = '*' , $table, $order = 'id', $limit = '3', $oredring = 'DESC'){
+//    function latest($select = '*' , $table, $order = 'id', $limit = '3', $oredring = 'DESC')
+//    {
+//        global $con;
+//        if ($limit == 'all'){ // add limit all to function
+//            $lim = '';
+//        } else{
+//            $lim = 'LIMIT = ' . $limit;
+//        }
+//        $newStmt = "SELECT $select FROM $table  ORDER BY $order   $oredring ";
+//        $query= $con->prepare($newStmt);
+//         $query->execute();
+//         $fetched = $query->fetchAll();
+//         return $fetched;
+//    }
+   function latest($select = '*' , $table, $order = 'id', $limit = '3', $oredring = 'DESC', $pending = null)
+   {
        global $con;
        if ($limit == 'all'){ // add limit all to function
            $lim = '';
        } else{
-           $lim = 'LIMIT ' . $limit;
+           $lim = 'LIMIT  ' . $limit;
        }
-       $newStmt = "SELECT $select FROM $table ORDER BY $order $oredring ";
+       if ( $pending == 'pending') {
+          $pending = 'WHERE visibility = 0 ';
+       } else{
+        $pending = null;
+       }
+       $newStmt = "SELECT $select FROM $table $pending   ORDER BY $order   $oredring $lim ";
        $query= $con->prepare($newStmt);
         $query->execute();
         $fetched = $query->fetchAll();
