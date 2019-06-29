@@ -15,7 +15,9 @@ if (isset($_SESSION['username'])) {
     <!-- start dashboard pending and approval -->
     <div class="dashboard text-center">
         <div class="container">
-            <h1 class="dash text-center">Dashboard</h1>
+            <h1 class="dash text-center">Dashboard
+            </h1>
+            
             <div class="row">
                 <div class="col-md-3">
                     <div class="box ">
@@ -113,22 +115,19 @@ if (isset($_SESSION['username'])) {
                                           $comment['comment'] .
                                           "</div><div class='comment-date'>".
                                           $comment['date']  ; ?>
-                                           <a href="comments.php?do=delete&id=<?php echo $comment['comment_id']; ?>" class="btn btn-danger ">Delete</a>
-                                           <a href="comments.php?do=edit&id=<?php echo $comment['comment_id']; ?>" class="btn btn-success">Edit </a>
+                                           <a href="comments.php?do=delete&id=<?php echo $comment['comment_id']; ?>" class="btn btn-danger "> <i class="fas fa-trash-alt"></i> Delete</a>
+                                           <a href="comments.php?do=edit&id=<?php echo $comment['comment_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i> Edit </a>
                                         <?php if ($comment['status'] == 0) {
                                             ?>
-                                            <a href="comments.php?do=active&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info ">active</a>
+                                            <a href="comments.php?do=active&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info "><i class="fas fa-check-circle"></i> active</a>
                                         <?php
                                     } else {  ?>
-                                            <a href="comments.php?do=deactive&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info ">deactive</a>
+                                            <a href="comments.php?do=deactive&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info "><i class="fas fa-times-circle"></i> deactive</a>
                                         <?php
                                     }
                                     ?>
                                           </div>
-                                        <span class="latest-span">
-                                         <!-- <a href="members.php?do=edit&id=<?php echo $comment['comment_id']; ?>" class="btn btn-success">Edit </a>
-                                         <a href="members.php?do=delete&id=<?php echo $comment['comment_id']; ?>" class="btn btn-danger ">Delete</a> -->
-                                         </span>
+                                      
                                <?php  echo '</div>';
                             } ?></div>
                 </div>
@@ -141,8 +140,8 @@ if (isset($_SESSION['username'])) {
                                 echo'<div class="user">' ;
                                         echo $item['name'] ; ?>
                                         <span class="latest-span">
-                                         <a href="items.php?do=edit&id=<?php echo $item['item_id']; ?>" class="btn btn-success">Edit </a>
-                                         <a href="items.php?do=delete&id=<?php echo $item['item_id']; ?>" class="btn btn-danger ">Delete</a>
+                                         <a href="items.php?do=edit&id=<?php echo $item['item_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i> Edit </a>
+                                         <a href="items.php?do=delete&id=<?php echo $item['item_id']; ?>" class="btn btn-danger "> <i class="fas fa-trash-alt"></i> Delete</a>
                                          </span>
                                <?php  echo '</div>';
                             } ?></div>

@@ -50,14 +50,14 @@ if (isset($_SESSION['username'])) {
                                     <td><?php echo
                                             $comment['date'] ?></td>
                                     <td>
-                                        <a href="comments.php?do=delete&id=<?php echo $comment['comment_id']; ?>" class="btn btn-danger ">Delete</a>
-                                        <a href="comments.php?do=edit&id=<?php echo $comment['comment_id']; ?>" class="btn btn-success">Edit </a>
+                                        <a href="comments.php?do=delete&id=<?php echo $comment['comment_id']; ?>" class="btn btn-danger "><i class="fas fa-trash-alt"></i> Delete</a>
+                                        <a href="comments.php?do=edit&id=<?php echo $comment['comment_id']; ?>" class="btn btn-success"><i class="fas fa-edit"></i>Edit </a>
                                         <?php if ($comment['status'] == 0) {
                                             ?>
-                                            <a href="comments.php?do=active&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info ">active</a>
+                                            <a href="comments.php?do=active&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info "><i class="fas fa-check-circle"></i> active</a>
                                         <?php
                                     } else {  ?>
-                                            <a href="comments.php?do=deactive&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info ">deactive</a>
+                                            <a href="comments.php?do=deactive&id=<?php echo $comment['comment_id']; ?>" class="btn btn-info "><i class="fas fa-times-circle"></i> deactive</a>
                                         <?php
                                     }
                                     ?>
@@ -91,7 +91,7 @@ elseif ($do == 'edit') { // edit page
     <!--Start Edit form -->
         <form class="form-group edit-form" action="?do=update" method="POST">
             <div class="container">
-                <h1>Edit comment</h1>
+                <h1><i class="fas fa-edit"></i> Edit comment</h1>
                 <div class="form-group row ">
                     <label for="username" class="col-sm-1 col-label">user: </label>
                     <div class="col-sm-4  ">

@@ -50,13 +50,13 @@ foreach($fetchUsers as $member){
     <td><?php echo 
     $member['date'] ?></td>
     <td>
-        <a href="members.php?do=edit&id=<?php echo $member['userId']; ?>" class="btn btn-success">Edit </a>
-        <a href="members.php?do=delete&id=<?php echo $member['userId']; ?>" class="btn btn-danger ">Delete</a>
+        <a href="members.php?do=edit&id=<?php echo $member['userId']; ?>" class="btn btn-success"><i class="fas fa-edit"></i> Edit </a>
+        <a href="members.php?do=delete&id=<?php echo $member['userId']; ?>" class="btn btn-danger "><i class="fas fa-trash-alt"></i> Delete</a>
         <?php if($member['regStatus'] == 0){  ?>
-          <a href="members.php?do=active&id=<?php echo $member['userId']; ?>" class="btn btn-info ">active</a>
+          <a href="members.php?do=active&id=<?php echo $member['userId']; ?>" class="btn btn-info "><i class="fas fa-check-circle"></i> active</a>
           <?php
         } else{ ?>
-          <a href="members.php?do=deactive&id=<?php echo $member['userId']; ?>" class="btn btn-info ">Deactive</a>
+          <a href="members.php?do=deactive&id=<?php echo $member['userId']; ?>" class="btn btn-info "><i class="fas fa-times-circle"></i> Deactive</a>
           <?php
         }
           ?>
@@ -167,7 +167,7 @@ foreach($fetchUsers as $member){
     ?>
       <form class="form-group edit-form" action="?do=update" method="POST">
           <div class="container">
-          <h1>Edit Member</h1>
+          <h1><i class="fas fa-edit"></i> Edit Member</h1>
   <div class="form-group row ">
     <label for="username" class="col-sm-1 col-label">username</label>
     <div class="col-sm-4  ">

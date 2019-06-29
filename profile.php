@@ -10,12 +10,14 @@ if(isset($_SESSION['user'])){
     $query->bindparam(':username', $_SESSION['user'], PDO::PARAM_STR);
     $query->execute();
     $get = $query->fetch();
+  
+  
    
 ?>
 
 <div class="information block">
     <div class="container">
-        <h1 class="text-center">My profile</h1>
+        <h1 class="text-center"><i class="fas fa-user"></i>  <?php echo strtoupper($get['username']); ?></h1>
         <!-- information block -->
         <div class="panel panel-primary">
             <div class="panel-heading text-center"> 
@@ -46,16 +48,16 @@ if(isset($_SESSION['user'])){
             <div class="panel-heading text-center"> <i class="fas fa-cog"></i> My ADs</div>
             <div class="panel-body">
                 
-                <?php if(! empty(getItem('pending', 'pending', $get['userId']))){
-                foreach(getItem('pending', 'pending',$get['userId']) as $userAds){?>
+                <?php if(! empty(get_all('*', 'items', "WHERE user_id = {$get['userId']}",'',''))){
+                foreach(get_all('*', 'items', "WHERE user_id = {$get['userId']}",'','') as $userAds){?>
+
                      <div class="col-sm-6 col-md-3">
                 <div class="thumbnail item-box">
                     <span class="price"><?php echo $userAds['price'] ?></span>
                     <?php  if($userAds['status'] == 0){
                         echo '<span class="approval">Wating Approval</span>';
                     } ?>
-                    
-                    <img src="computer.png" class="img-fluid img-thumbnail" alt="Responsive image">
+                    <img src="<?php echo 'uploads\item\\'. $userAds['avater_item']; ?>" class="img-fluid img-thumbnail" alt="Responsive image">
                     <div class="caption">
                         <h3 class="name text-center"> <a href="index.php?do=item&id=<?php echo $userAds['item_id']; ?>" class="title"> <?php echo $userAds['name'] ?></a></h3>
                         <p class="description text-center"><?php echo $userAds['description'] ?></p>
@@ -68,7 +70,7 @@ if(isset($_SESSION['user'])){
                 } else{
                     echo 'there are no ads to show';
                 }
-               
+        
                 ?>
             </div>
         </div>
@@ -78,11 +80,8 @@ if(isset($_SESSION['user'])){
             <div class="panel-heading text-center"><i class="fas fa-comments"></i> My latest Comments</div>
             <div class="panel-body">
                 <?php 
-                $q = "SELECT * FROM comments WHERE user_id =:user_id";
-                $queri = $con->prepare($q);
-                $queri->bindparam(':user_id', $get['userId'], PDO::PARAM_INT);
-                $queri->execute();
-                $comments = $queri->fetchAll();
+                
+                $comments = get_all('*', 'comments', "WHERE user_id = {$get['userId']}", '','');
                 if(! empty($comments)){
                     foreach($comments as $comment){
                         ?>

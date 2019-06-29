@@ -12,7 +12,7 @@ $(function (){
     $('.full').click(function(){
         $('.panel-body .box').css({
             'transition' : 'all .23s',
-                'height' : '52px',
+                'height' : '100%',
         });
     });
     $('.classic').click(function(){

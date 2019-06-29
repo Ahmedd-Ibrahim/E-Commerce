@@ -73,20 +73,6 @@ function checkUsername($select, $from, $value)
    * @par $limit ( integer ) result limit exapmle [3]
    * @return array
    */
-//    function latest($select = '*' , $table, $order = 'id', $limit = '3', $oredring = 'DESC')
-//    {
-//        global $con;
-//        if ($limit == 'all'){ // add limit all to function
-//            $lim = '';
-//        } else{
-//            $lim = 'LIMIT = ' . $limit;
-//        }
-//        $newStmt = "SELECT $select FROM $table  ORDER BY $order   $oredring ";
-//        $query= $con->prepare($newStmt);
-//         $query->execute();
-//         $fetched = $query->fetchAll();
-//         return $fetched;
-//    }
    function latest($select = '*' , $table, $order = 'id', $limit = '3', $oredring = 'DESC', $pending = null)
    {
        global $con;
@@ -100,7 +86,29 @@ function checkUsername($select, $from, $value)
        } else{
         $pending = null;
        }
+       
        $newStmt = "SELECT $select FROM $table $pending   ORDER BY $order   $oredring $lim ";
+       $query= $con->prepare($newStmt);
+        $query->execute();
+        $fetched = $query->fetchAll();
+        return $fetched;
+   }
+
+   
+    /**
+     * function to get all item from database
+     * @par coulmn selector
+     * @par teble selector
+     * @par where selector
+     * @par ordering data by
+     * @par limit data
+     * @return array
+     */
+   
+   function get_all($selector = '*' , $table, $Where = null , $order = null , $limit = null)
+   {
+       global $con;
+       $newStmt = "SELECT $selector FROM $table $Where  $order  $limit ";
        $query= $con->prepare($newStmt);
         $query->execute();
         $fetched = $query->fetchAll();

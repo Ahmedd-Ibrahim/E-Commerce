@@ -36,8 +36,12 @@ body{
     background-color: #dee2e6
 }
 
- .img-thumbnail{
+.item  .panel-primary .img-thumbnail{
     padding: 0;
+    max-width: 246px;
+    max-height: 200px;
+    min-height: 200px;
+    min-width:246px ;
 }
 .thumbnail .caption{
     position: relative;
@@ -116,6 +120,13 @@ body{
 }
 /* End profile */
 /* ads */
+
+.ads .img-thumbnail {
+    max-width: 246px;
+    max-height: 200px;
+    min-height: 200px;
+    min-width:246px ;
+}
  .price{
     padding: 0px 16px;
     top: 8px;
@@ -136,6 +147,9 @@ body{
     color: #ada1a1;
     margin: -4px;
     
+}
+.ads .info-head{
+    font-size: 28px;
 }
 /* End ads */
 /* index page */

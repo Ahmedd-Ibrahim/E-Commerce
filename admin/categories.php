@@ -1,10 +1,8 @@
 <?php
-
 $page_title = 'Categories';
 session_start();
 include 'ini.php';
 if (isset($_SESSION['username'])) {
-
   if ($do == 'manage') { // genral page
     $sort = 'DESC';
     $sortArray = array('desc', 'asc');
@@ -13,9 +11,12 @@ if (isset($_SESSION['username'])) {
     }
     // condiditon to dinimc categories if pending
       if (isset($_GET['page']) && $_GET['page'] == 'pending'){
-        $categories = latest('*', 'categories', 'id', 'all', $sort, 'pending');
+       
+        $categories = get_all('*', 'categories', 'WHERE visibility = 0',  "",'');
       } else{
-        $categories = latest('*', 'categories', 'id', 'all', $sort);
+       
+        $categories = get_all('*', 'categories', 'WHERE parent = 0', "ORDER BY id {$sort}",'');
+        $child_categories = get_all('*', 'categories', 'WHERE parent != 0', "ORDER BY id {$sort}",'');
       }
     ?>
     <!-- Start mange Categories -->
@@ -38,17 +39,25 @@ if (isset($_SESSION['username'])) {
           <?php
           foreach ( $categories as $cat) {
             echo '<div class="cat">';
-            echo '<h4>' . $cat['name'] . '</h4>';
+            echo '<h4> '. $cat['name'] . '</h4>';
             ?>
-            <a href="?do=delete&id=<?php echo $cat['id']; ?>" class="btn btn-danger edit">Delete</a>
-            <a href="?do=edit&id=<?php echo $cat['id']; ?>" class="btn btn-success edit">Edit </a>
+            <a href="?do=delete&id=<?php echo $cat['id']; ?>" class="btn btn-danger edit"><i class="fas fa-trash-alt"></i> Delete</a>
+            <a href="?do=edit&id=<?php echo $cat['id']; ?>" class="btn btn-success edit"><i class="fas fa-edit"></i> Edit </a>
             <?php
             echo "<div class='box'>";            echo "<p>" . ($cat['description'] == '' ? 'description is empty' : $cat['description']) . '</p>';
-            echo '<a href="?do=visibility&id=' . $cat['id'] . ' &vis=' . $cat['visibility'] . '" class="btn btn-info"> ' . ($cat['visibility'] == 0 ? 'display' : 'hidden') . ' </a>';
+          
+            echo '<a href="?do=visibility&id=' . $cat['id'] . ' &vis=' . $cat['visibility'] . '" class="btn btn-info"> ' . ($cat['visibility'] == 0 ? '<i class="fas fa-check-circle"></i> display' : '<i class="fas fa-times-circle"></i> hidden') . ' </a>';
             echo '<span class="btn btn-danger">' . ($cat['allow_comment'] == 0 ? 'Disable comment' : 'Enable') . ' </span>';
             echo '<span class="btn btn-secondary">' . ($cat['allow_ads'] == 0 ? 'Remove Ads' : 'Add') . '</span>';
-            echo "</div>";
-            echo '<hr></div>';
+            
+            $id = $cat['id']; // category id
+              $child_categories = get_all('*', 'categories', "WHERE parent = {$id}", "",''); // get category child
+              echo '<p>';
+              foreach ($child_categories as $child){
+                echo '<a href="#">' . $child['name'] . ' </a> | ';
+              }
+
+            echo '</p></div><hr></div>';
           }
           ?>
         </div>
@@ -81,6 +90,21 @@ if (isset($_SESSION['username'])) {
           <div class="col-sm-4  ">
             <input type="text" class="form-control" autocomplete="off" name="ordering" placeholder='number of range ordering'>
           </div>
+        </div>
+        <div class="form-group row ">
+          <label class="col-sm-2 col-label  text-center">parent ?</label>
+          <div class="col-sm-4  ">
+                                                <select class="form-control" name="parent">
+                                                    <option value="0">none</option>
+                                                    <?php
+                                                  
+                                                    $fetchAll = get_all('id, name', 'categories','','','');
+                                                    foreach ($fetchAll as $item) {
+                                                        echo '<option value="' . $item['id'] . '">' . $item['name'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
         </div>
         <!-- visible filed -->
         <div class="form-group row ">
@@ -130,7 +154,7 @@ if (isset($_SESSION['username'])) {
 
         <div class="form-group row">
           <div class="col-sm-5 offset-1">
-            <button type="submit" name='insert' class="btn btn-primary btn-block btn-lg">Add New member</button>
+            <button type="submit" name='insert' class="btn btn-primary btn-block btn-lg">Add New Catogers</button>
           </div>
         </div>
       </div>
@@ -148,6 +172,7 @@ if (isset($_SESSION['username'])) {
     $visible = intval($_POST['visible']);
     $comment = intval($_POST['allow-comment']);
     $ads = intval($_POST['allow-ads']);
+    $parent = intval($_POST['parent']);
     // form errors messages
     $error[] = '';
     (empty($name) ? $error[] =  "<div class='alert alert-danger' >name is empty </div>" : null);
@@ -163,10 +188,10 @@ if (isset($_SESSION['username'])) {
         $mesg = '<div class="alert alert-danger">This categories is exist </div>';
         echo myDirect($mesg, 'back');
       } else {  // insert categories data
-        $user_id = $_SESSION['user_id'];
-        echo $user_id;
-        $q = "INSERT INTO `categories` (name, description, ordering, visibility, allow_comment, allow_ads, date, user_id) 
-        values(:name, :description, :ordering, :visible, :allow_comment, :allow_ads , now(), 1)";
+       
+        
+        $q = "INSERT INTO `categories` (name, description, ordering, visibility, allow_comment, allow_ads, date, user_id, parent) 
+        values(:name, :description, :ordering, :visible, :allow_comment, :allow_ads , now(), :user_id, :parent)";
         $query = $con->prepare($q);
         $query->bindparam(':name', $name, PDO::PARAM_STR);
         $query->bindparam(':description', $desc, PDO::PARAM_STR);
@@ -174,6 +199,8 @@ if (isset($_SESSION['username'])) {
         $query->bindparam(':visible', $visible, PDO::PARAM_INT);
         $query->bindparam(':allow_comment', $comment, PDO::PARAM_INT);
         $query->bindparam(':allow_ads', $ads, PDO::PARAM_INT);
+        $query->bindparam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $query->bindparam(':parent', $parent, PDO::PARAM_INT);
         
         $update = $query->execute();
         if ($update == true) {
@@ -206,7 +233,7 @@ elseif ($do == 'edit') { // start Edit script
   <!-- start Edit categories -->
     <form class="form-group edit-form" action="?do=update&id=<?php echo $_GET['id']?>" method="POST">
       <div class="container">
-        <h1>Edit categories</h1>
+        <h1><i class="fas fa-edit"></i> Edit categories</h1>
         <div class="form-group row ">
           <label class="col-sm-2 col-label  text-center">name</label>
           <div class="col-sm-4  ">
@@ -284,7 +311,7 @@ elseif ($do == 'edit') { // start Edit script
         <!-- End ads filed -->
         <div class="form-group row">
           <div class="col-sm-5">
-            <button type="submit" name='update' class="btn btn-primary btn-block btn-lg">EDIT !</button>
+            <button type="submit" name='update' class="btn btn-primary btn-block btn-lg"><i class="fas fa-edit"></i> EDIT!</button>
           </div>
         </div>
       </div>

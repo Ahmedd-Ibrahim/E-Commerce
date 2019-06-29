@@ -183,7 +183,7 @@ margin-bottom: 0;
 .categories .cat .edit{
     float: right;
     position: relative;
-    margin-right: -70px;
+    margin-right: -86px;
     transition: .25s;
 }
 .categories .cat:hover .edit {

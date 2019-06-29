@@ -17,7 +17,7 @@
         <div class="container">
             <div class="upper-cat">
              <?php if (isset($_SESSION['user'])) { ?>
-            <div class=" btn-group">
+            <div class=" btn-group pull-right">
   <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
   <img src="avatar.png" class=" img-thumbnail img-circle" alt="Responsive image">
     <?php echo  $_SESSION['user'] . ' <i class="fas fa-caret-down"></i>';?>
@@ -52,7 +52,7 @@
                 <ul class="nav navbar-nav ml-auto">
                     
                     <?php
-                    $getCats = getCat();
+                    $getCats = get_all('*', 'categories', 'WHERE visibility = 1 AND parent = 0', 'ORDER BY ordering', '');
                     foreach ($getCats as $cat) { ?>
                         <li class="nav-item ">
                             <a class="nav-link" href="index.php?pageid=<?php echo $cat['id'] . '&pagename=' . str_replace(' ', '-', $cat['name']); ?>"> <?php echo $cat['name']; ?></a>

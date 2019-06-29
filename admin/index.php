@@ -14,21 +14,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $user = $_POST['username'];
     $pass = $_POST['pass'];
     $hash = sha1($pass);
-    $stmt  = "SELECT groupId,username , password FROM users WHERE username =:username AND password=:password AND userId = 1";
+    $stmt  = "SELECT * FROM `users` WHERE username =:username AND password=:password AND groupId = 1";
     $query = $con->prepare($stmt);
-    
     $query->bindparam(':username', $user, PDO::PARAM_STR);
     $query->bindparam(':password', $pass, PDO::PARAM_STR);
     $insert = $query->execute();
     $count = $query->rowCount();
     $fetch = $query->fetch();
-    
     if ($count == true) {
-        echo 'checked and it\'s true';
-        $_SESSION['username'] = $user;
-        $_SESSION['groupId'] = $fetch['groupId'];
-        $_SESSION['username'] = $fetch['username'];
-        $_SESSION['password'] = $fetch['password'];
+        
+   $_SESSION['user_id'] = $fetch['userId'];
+   $_SESSION['username'] = $fetch['username'];
         header('location: dashboard.php');
         exit();
     }
