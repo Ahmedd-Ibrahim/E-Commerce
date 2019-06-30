@@ -1,8 +1,7 @@
 <?php
+ob_start();
 session_start();
-
 $page_title = 'ADS';
-
 include 'ini.php';
 if (isset($_SESSION['user'])) {
     // insert item
@@ -192,4 +191,5 @@ if (isset($_SESSION['user'])) {
     exit();
 }
 include $temp . 'footer.php';
+ob_end_flush();
 ?>

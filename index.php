@@ -6,9 +6,7 @@ include 'ini.php';
 if (! isset($_SESSION['user'])) {
     header('location: login.php');
     exit();
-}
-
-  
+}  
 ?>
 <div class="container item">
     <?php
@@ -56,7 +54,7 @@ if (! isset($_SESSION['user'])) {
                                             foreach ($cats as $cat){ ?>
                                             <li>
                                                 <p><span>Category </span>
-                                                    <a href="categories.php?pageid=<?php echo $cat['id']  . '&pagename=' . str_replace(' ', '-',$cat['name']); ?>">
+                                                    <a href="index.php?pageid=<?php echo $cat['id']  . '&pagename=' . str_replace(' ', '-',$cat['name']); ?>">
                                                         <?php echo $cat['name']; ?>
                                                     </a></p>
                                             </li>
@@ -150,7 +148,7 @@ if (! isset($_SESSION['user'])) {
 <div class="row">
         <?php
         
-        foreach (get_all('*', 'items', "WHERE cat_id = {$_GET['pageid']} ",'','') as $item) {
+        foreach (get_all('*', 'items', "WHERE cat_id = {$_GET['pageid']} AND status=1",'','') as $item) { // here
             $unByItem = get_all('username', 'users', "WHERE userId = {$item['user_id']}", '','');
             foreach ($unByItem as $username) {
                  $userN = $username['username'];

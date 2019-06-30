@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 $page_title = 'Items';
 session_start();
 include 'ini.php';
@@ -456,3 +456,4 @@ if (isset($_SESSION['username'])) {
   exit();
 }
 include $temp . 'footer.php';
+ob_end_flush();

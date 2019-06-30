@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 $noNav = '';
 $page_title = 'Login';
@@ -40,4 +41,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <?php
 include $temp . 'footer.php';
+ob_end_flush();
 ?>

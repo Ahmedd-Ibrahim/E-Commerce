@@ -1,6 +1,6 @@
 <?php
+ob_start();
 session_start();
-
 $page_title = 'profile';
 
 include 'ini.php';
@@ -11,8 +11,6 @@ if(isset($_SESSION['user'])){
     $query->execute();
     $get = $query->fetch();
   
-  
-   
 ?>
 
 <div class="information block">
@@ -124,4 +122,5 @@ if(isset($_SESSION['user'])){
     exit();
 }
 include $temp . 'footer.php';
+ob_end_flush();
 ?>

@@ -2,6 +2,7 @@
 /**
  * manage memmbers [ Edit || update || Delete || Add || status]
  */
+ob_start();
 session_start();
 $page_title = 'members';
 include 'ini.php';
@@ -325,3 +326,4 @@ if (isset($_POST['update']) && $do == 'update') {
             echo myDirect($mesg, 'index.php');
 }
 include $temp . 'footer.php';
+ob_end_flush();

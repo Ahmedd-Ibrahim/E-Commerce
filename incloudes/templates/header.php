@@ -35,6 +35,9 @@
     </div>
     <!-- End  uppear navbar -->
     <!-- default navbar -->
+    <?php
+    if (isset($_SESSION['user'])){
+    ?>
     <nav class="navbar navbar-inverse">
 
         <div class="container">
@@ -64,4 +67,7 @@
             </div>
         </div>
     </nav>
+    <?php 
+    }
+    ?>
       <!--End default navbar -->

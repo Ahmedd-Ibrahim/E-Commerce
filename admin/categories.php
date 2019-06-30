@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $page_title = 'Categories';
 session_start();
 include 'ini.php';
@@ -407,3 +408,4 @@ elseif ($do == 'edit') { // start Edit script
   echo myDirect($msg, 'index.php');
 }
 include $temp . 'footer.php';
+ob_end_flush();

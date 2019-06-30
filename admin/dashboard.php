@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 if (isset($_SESSION['username'])) {
     $page_title = 'Dashboard';
     include 'ini.php';
@@ -162,4 +163,6 @@ if (isset($_SESSION['username'])) {
     header('location: index.php');
 }
 include $temp . 'footer.php';
+ob_end_flush();
+
 ?>

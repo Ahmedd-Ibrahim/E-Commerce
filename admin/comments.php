@@ -2,6 +2,7 @@
 /**
  * manage comments [ Edit || update || Delete || Add || status]
  */
+ob_start();
 session_start();
 if (isset($_SESSION['username'])) {
     $page_title = 'Mange Comments';
@@ -215,3 +216,4 @@ elseif ($do == 'edit') { // edit page
     }
 }
 include $temp .'footer.php';
+ob_end_flush();
